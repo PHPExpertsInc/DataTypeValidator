@@ -157,14 +157,14 @@ class DataTypeValidatorTest extends TestCase
         ];
 
         $nullData = [
-            'name'     => 'Cheyenne',
-            'age'      => 22,
-            'birthday' => Carbon::parse('1996-12-04 15:15:15'),
-            'daysOld'  => 8194.35,
-            'today'    => Carbon::now(),
-            'sayHi'    => function () { return 'Hi!'; },
-            'lucky'    => [7, 2, 1],
-            'single'   => false,
+            'name'     => null,
+            'age'      => null,
+            'birthday' => null,
+            'daysOld'  => null,
+            'today'    => null,
+            'sayHi'    => null,
+            'lucky'    => null,
+            'single'   => null,
         ];
 
         $rules = [
@@ -184,5 +184,11 @@ class DataTypeValidatorTest extends TestCase
         } catch (InvalidDataTypeException $e) {
             dd($e->getReasons());
         }
+    }
+
+    public function testWillThrowALogicExceptionIfANonStringRuleIsGiven()
+    {
+        self::expectException('LogicException');
+        $this->fuzzy->validate(['asdf' => true], ['asdf' => 13]);
     }
 }

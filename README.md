@@ -107,6 +107,7 @@ PHPExperts\DataTypeValidator\DataTypeValidator
  ✔ Will silently ignore rules with no data  
  ✔ Data cannot be null by default  
  ✔ Any data type that starts with a '?' is nullable  
+ ✔ Will throw a logic exception if a non string rule is given  
 
 PHPExperts\DataTypeValidator\DataTypeValidator: Assertions  
  ✔ Will assert a value is a bool  
