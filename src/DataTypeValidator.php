@@ -2,6 +2,8 @@
 
 namespace PHPExperts\DataTypeValidator;
 
+use LogicException;
+
 class DataTypeValidator implements IsA
 {
     /** @var IsADataType */
@@ -157,8 +159,21 @@ class DataTypeValidator implements IsA
             }
 
             $expectedType = $rules[$key];
+            if (!$this->isString($expectedType)) {
+                throw new LogicException("The data type for $key is not a string.");
+            }
 
             try {
+                // Allow nullable types.
+                if ($expectedType[0] === '?') {
+                    if ($value === null) {
+                        continue;
+                    }
+
+                    // Then strip it out of the expected type.
+                    $expectedType = substr($expectedType, 1);
+                }
+
                 // Traditional values.
                 if (in_array($expectedType, ['string', 'int', 'bool', 'float', 'array', 'object', 'callable', 'resource'])) {
                     $this->assertIsType($value, $expectedType);

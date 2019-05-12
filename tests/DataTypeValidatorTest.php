@@ -48,6 +48,8 @@ class DataTypeValidatorTest extends TestCase
             'daysOld'  => 8194.35,
             'today'    => Carbon::now(),
             'sayHi'    => function () { return 'Hi!'; },
+            'lucky'    => [7, 2, 1],
+            'single'   => false,
         ];
 
         $rules = [
@@ -57,6 +59,8 @@ class DataTypeValidatorTest extends TestCase
             'daysOld'  => 'float',
             'today'    => 'Carbon\Carbon',
             'sayHi'    => 'callable',
+            'lucky'    => 'array',
+            'single'   => 'bool',
         ];
 
         self::assertTrue($this->strict->validate($data, $rules));
@@ -123,5 +127,63 @@ class DataTypeValidatorTest extends TestCase
         ];
 
         self::assertTrue($this->strict->validate($data, $rules), 'Invalid data validated :o');
+    }
+
+    public function testDataCannotBeNullByDefault()
+    {
+        $data = [
+            'name' => null,
+        ];
+
+        $rules = [
+            'name' => 'string',
+        ];
+
+        self::expectException(InvalidDataTypeException::class);
+        $this->strict->validate($data, $rules);
+    }
+
+    /** @testdox Any data type that starts with a '?' is nullable */
+    public function testAnyDataTypeThatStartsWithAQuestionMarkIsNullable()
+    {
+        $data = [
+            'name'     => 'Cheyenne',
+            'age'      => 22,
+            'birthday' => Carbon::parse('1996-12-04 15:15:15'),
+            'daysOld'  => 8194.35,
+            'today'    => Carbon::now(),
+            'sayHi'    => function () { return 'Hi!'; },
+            'lucky'    => [7, 2, 1],
+            'single'   => false,
+        ];
+
+        $nullData = [
+            'name'     => 'Cheyenne',
+            'age'      => 22,
+            'birthday' => Carbon::parse('1996-12-04 15:15:15'),
+            'daysOld'  => 8194.35,
+            'today'    => Carbon::now(),
+            'sayHi'    => function () { return 'Hi!'; },
+            'lucky'    => [7, 2, 1],
+            'single'   => false,
+        ];
+
+        $rules = [
+            'name'     => '?string',
+            'age'      => '?int',
+            'birthday' => '?Carbon',
+            'daysOld'  => '?float',
+            'today'    => '?Carbon\Carbon',
+            'sayHi'    => '?callable',
+            'lucky'    => '?array',
+            'single'   => '?bool',
+        ];
+
+        try {
+            self::assertTrue($this->strict->validate($data, $rules));
+            self::assertTrue($this->strict->validate($nullData, $rules));
+        } catch (InvalidDataTypeException $e) {
+            dd($e->getReasons());
+        }
     }
 }
