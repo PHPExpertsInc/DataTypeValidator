@@ -156,9 +156,9 @@ class DataTypeValidator implements IsA
                 continue;
             }
 
-            try {
-                $expectedType = $rules[$key];
+            $expectedType = $rules[$key];
 
+            try {
                 // Traditional values.
                 if (in_array($expectedType, ['string', 'int', 'bool', 'float', 'array', 'object', 'callable', 'resource'])) {
                     $this->assertIsType($value, $expectedType);
