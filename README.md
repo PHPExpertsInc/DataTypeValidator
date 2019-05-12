@@ -95,8 +95,8 @@ phpbench run --report=aggregate
 
 | benchmark              | subject        | set | revs | its | mem_peak   | best     | mean     | mode     | worst    | stdev   | rstdev | diff  |
 |------------------------|----------------|-----|------|-----|------------|----------|----------|----------|----------|---------|--------|-------|
-| DataTypeValidatorBench | benchValidator | 0   | 1000 | 5   | 1,403,528b | 51.278μs | 52.566μs | 53.167μs | 54.005μs | 1.087μs | 2.07%  | 2.57x |
-| DataTypeValidatorBench | benchNative    | 0   | 1000 | 5   | 1,357,368b | 19.313μs | 20.455μs | 20.866μs | 21.221μs | 0.715μs | 3.50%  | 1.00x |
+| DataTypeValidatorBench | benchValidator | 0   | 1000 | 5   | 1,407,752b | 54.543μs | 55.456μs | 55.661μs | 56.050μs | 0.519μs | 0.94%  | 2.29x |
+| DataTypeValidatorBench | benchNative    | 0   | 1000 | 5   | 1,357,368b | 20.470μs | 24.246μs | 21.822μs | 30.204μs | 3.833μs | 15.81% | 1.00x |
 
 # Use cases
 
@@ -105,6 +105,9 @@ PHPExperts\DataTypeValidator\DataTypeValidator
  ✔ Will return an array of invalid keys with explanations  
  ✔ Will silently ignore data not in the rules  
  ✔ Will silently ignore rules with no data  
+ ✔ Data cannot be null by default  
+ ✔ Any data type that starts with a '?' is nullable  
+ ✔ Will throw a logic exception if a non string rule is given  
 
 PHPExperts\DataTypeValidator\DataTypeValidator: Assertions  
  ✔ Will assert a value is a bool  

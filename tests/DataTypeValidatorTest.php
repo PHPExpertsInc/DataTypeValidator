@@ -1,9 +1,20 @@
 <?php declare(strict_types=1);
 
+/**
+ * This file is part of DataTypeValidator, a PHP Experts, Inc., Project.
+ *
+ * Copyright © 2019 PHP Experts, Inc.
+ * Author: Theodore R. Smith <theodore@phpexperts.pro>
+ *  GPG Fingerprint: 4BF8 2613 1C34 87AC D28F  2AD8 EB24 A91D D612 5690
+ *  https://www.phpexperts.pro/
+ *  https://github.com/phpexpertsinc/DataTypeValidator
+ *
+ * This file is licensed under the MIT License.
+ */
+
 namespace PHPExperts\DataTypeValidator\Tests;
 
 use Carbon\Carbon;
-use function foo\func;
 use PHPExperts\DataTypeValidator\DataTypeValidator;
 use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\DataTypeValidator\IsAFuzzyDataType;
@@ -27,18 +38,6 @@ class DataTypeValidatorTest extends TestCase
         parent::setUp();
     }
 
-    private function getDataByType(string $dataType, array $dataAndTypes): array
-    {
-        $out = [];
-        foreach ($dataAndTypes as [$type, $value]) {
-            if ($type === $dataType) {
-                $out[] = $value;
-            }
-        }
-
-        return $out;
-    }
-
     public function testCanBulkValidateADataArray()
     {
         $data = [
@@ -48,6 +47,8 @@ class DataTypeValidatorTest extends TestCase
             'daysOld'  => 8194.35,
             'today'    => Carbon::now(),
             'sayHi'    => function () { return 'Hi!'; },
+            'lucky'    => [7, 2, 1],
+            'single'   => false,
         ];
 
         $rules = [
@@ -57,6 +58,8 @@ class DataTypeValidatorTest extends TestCase
             'daysOld'  => 'float',
             'today'    => 'Carbon\Carbon',
             'sayHi'    => 'callable',
+            'lucky'    => 'array',
+            'single'   => 'bool',
         ];
 
         self::assertTrue($this->strict->validate($data, $rules));
@@ -123,5 +126,69 @@ class DataTypeValidatorTest extends TestCase
         ];
 
         self::assertTrue($this->strict->validate($data, $rules), 'Invalid data validated :o');
+    }
+
+    public function testDataCannotBeNullByDefault()
+    {
+        $data = [
+            'name' => null,
+        ];
+
+        $rules = [
+            'name' => 'string',
+        ];
+
+        self::expectException(InvalidDataTypeException::class);
+        $this->strict->validate($data, $rules);
+    }
+
+    /** @testdox Any data type that starts with a '?' is nullable */
+    public function testAnyDataTypeThatStartsWithAQuestionMarkIsNullable()
+    {
+        $data = [
+            'name'     => 'Cheyenne',
+            'age'      => 22,
+            'birthday' => Carbon::parse('1996-12-04 15:15:15'),
+            'daysOld'  => 8194.35,
+            'today'    => Carbon::now(),
+            'sayHi'    => function () { return 'Hi!'; },
+            'lucky'    => [7, 2, 1],
+            'single'   => false,
+        ];
+
+        $nullData = [
+            'name'     => null,
+            'age'      => null,
+            'birthday' => null,
+            'daysOld'  => null,
+            'today'    => null,
+            'sayHi'    => null,
+            'lucky'    => null,
+            'single'   => null,
+        ];
+
+        $rules = [
+            'name'     => '?string',
+            'age'      => '?int',
+            'birthday' => '?Carbon',
+            'daysOld'  => '?float',
+            'today'    => '?Carbon\Carbon',
+            'sayHi'    => '?callable',
+            'lucky'    => '?array',
+            'single'   => '?bool',
+        ];
+
+        try {
+            self::assertTrue($this->strict->validate($data, $rules));
+            self::assertTrue($this->strict->validate($nullData, $rules));
+        } catch (InvalidDataTypeException $e) {
+            dd($e->getReasons());
+        }
+    }
+
+    public function testWillThrowALogicExceptionIfANonStringRuleIsGiven()
+    {
+        self::expectException('LogicException');
+        $this->fuzzy->validate(['asdf' => true], ['asdf' => 13]);
     }
 }

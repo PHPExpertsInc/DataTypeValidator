@@ -1,11 +1,20 @@
 <?php declare(strict_types=1);
 
+/**
+ * This file is part of DataTypeValidator, a PHP Experts, Inc., Project.
+ *
+ * Copyright © 2019 PHP Experts, Inc.
+ * Author: Theodore R. Smith <theodore@phpexperts.pro>
+ *  GPG Fingerprint: 4BF8 2613 1C34 87AC D28F  2AD8 EB24 A91D D612 5690
+ *  https://www.phpexperts.pro/
+ *  https://github.com/phpexpertsinc/DataTypeValidator
+ *
+ * This file is licensed under the MIT License.
+ */
+
 namespace PHPExperts\DataTypeValidator\Tests;
 
-use Carbon\Carbon;
-use function foo\func;
 use PHPExperts\DataTypeValidator\DataTypeValidator;
-use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\DataTypeValidator\IsAFuzzyDataType;
 use PHPExperts\DataTypeValidator\IsAStrictDataType;
 use PHPUnit\Framework\TestCase;
