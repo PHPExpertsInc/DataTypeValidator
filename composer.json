@@ -3,6 +3,9 @@
     "type": "library",
     "description": "An easy to use data type validator (both strict and fuzzy).",
     "keywords": [
+        "datatype validator",
+        "data type validator",
+        "datatype",
         "data type",
         "validator",
         "validation"
