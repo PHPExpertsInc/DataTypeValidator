@@ -16,7 +16,7 @@ namespace PHPExperts\DataTypeValidator;
 
 use LogicException;
 
-class DataTypeValidator implements IsA
+final class DataTypeValidator implements IsA
 {
     /** @var IsADataType */
     protected $isA;
@@ -176,30 +176,7 @@ class DataTypeValidator implements IsA
             }
 
             try {
-                // Allow nullable types.
-                if ($expectedType[0] === '?') {
-                    if ($value === null) {
-                        continue;
-                    }
-
-                    // Then strip it out of the expected type.
-                    $expectedType = substr($expectedType, 1);
-                }
-
-                // Traditional values.
-                if (in_array($expectedType, ['string', 'int', 'bool', 'float', 'array', 'object', 'callable', 'resource'])) {
-                    $this->assertIsType($value, $expectedType);
-
-                    continue;
-                }
-                // See if it is a specific class:
-                elseif (strpos($expectedType, '\\') !== false) {
-                    $this->assertIsSpecificObject($value, $expectedType);
-
-                    continue;
-                }
-
-                $this->assertIsFuzzyObject($value, $expectedType);
+                $this->validateValue($value, $expectedType);
             } catch (InvalidDataTypeException $e) {
                 $reasons[$key] = "$key is not a valid $expectedType";
             }
@@ -212,5 +189,33 @@ class DataTypeValidator implements IsA
         }
 
         return true;
+    }
+
+    protected function validateValue($value, string $expectedType)
+    {
+        // Allow nullable types.
+        if ($expectedType[0] === '?') {
+            if ($value === null) {
+                return;
+            }
+
+            // Then strip it out of the expected type.
+            $expectedType = substr($expectedType, 1);
+        }
+
+        // Traditional values.
+        if (in_array($expectedType, ['string', 'int', 'bool', 'float', 'array', 'object', 'callable', 'resource'])) {
+            $this->assertIsType($value, $expectedType);
+
+            return;
+        }
+        // See if it is a specific class:
+        elseif (strpos($expectedType, '\\') !== false) {
+            $this->assertIsSpecificObject($value, $expectedType);
+
+            return;
+        }
+
+        $this->assertIsFuzzyObject($value, $expectedType);
     }
 }
