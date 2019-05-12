@@ -2,10 +2,7 @@
 
 namespace PHPExperts\DataTypeValidator\Tests;
 
-use Carbon\Carbon;
-use function foo\func;
 use PHPExperts\DataTypeValidator\DataTypeValidator;
-use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\DataTypeValidator\IsAFuzzyDataType;
 use PHPExperts\DataTypeValidator\IsAStrictDataType;
 use PHPUnit\Framework\TestCase;

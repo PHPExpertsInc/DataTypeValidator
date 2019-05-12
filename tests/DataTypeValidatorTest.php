@@ -3,7 +3,6 @@
 namespace PHPExperts\DataTypeValidator\Tests;
 
 use Carbon\Carbon;
-use function foo\func;
 use PHPExperts\DataTypeValidator\DataTypeValidator;
 use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\DataTypeValidator\IsAFuzzyDataType;
@@ -25,18 +24,6 @@ class DataTypeValidatorTest extends TestCase
         $this->fuzzy = new DataTypeValidator(new IsAFuzzyDataType());
 
         parent::setUp();
-    }
-
-    private function getDataByType(string $dataType, array $dataAndTypes): array
-    {
-        $out = [];
-        foreach ($dataAndTypes as [$type, $value]) {
-            if ($type === $dataType) {
-                $out[] = $value;
-            }
-        }
-
-        return $out;
     }
 
     public function testCanBulkValidateADataArray()

@@ -2,8 +2,6 @@
 
 namespace PHPExperts\DataTypeValidator\Tests;
 
-use Carbon\Carbon;
-use function foo\func;
 use PHPExperts\DataTypeValidator\DataTypeValidator;
 use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\DataTypeValidator\IsAFuzzyDataType;
@@ -29,63 +27,63 @@ class DataTypeValidatorAssertTest extends TestCase
 
     public function testWillAssertAValueIsABool()
     {
-        $this->expectException(InvalidDataTypeException::class);
+        self::expectException(InvalidDataTypeException::class);
         self::assertNull($this->strict->assertIsBool(true));
         $this->strict->assertIsBool('1.1');
     }
 
     public function testWillAssertAValueIsAnInt()
     {
-        $this->expectException(InvalidDataTypeException::class);
+        self::expectException(InvalidDataTypeException::class);
         self::assertNull($this->strict->assertIsInt(1));
         $this->strict->assertIsInt('1');
     }
 
     public function testWillAssertAValueIsAFloat()
     {
-        $this->expectException(InvalidDataTypeException::class);
+        self::expectException(InvalidDataTypeException::class);
         self::assertNull($this->strict->assertIsFloat(1.1));
         $this->strict->assertIsFloat('1.1');
     }
 
     public function testWillAssertAValueIsAString()
     {
-        $this->expectException(InvalidDataTypeException::class);
+        self::expectException(InvalidDataTypeException::class);
         self::assertNull($this->strict->assertIsString('1.1'));
         $this->strict->assertIsString(1.1);
     }
 
     public function testWillAssertAValueIsAnArray()
     {
-        $this->expectException(InvalidDataTypeException::class);
+        self::expectException(InvalidDataTypeException::class);
         self::assertNull($this->strict->assertIsArray([1.1]));
         $this->strict->assertIsArray(1.1);
     }
 
     public function testWillAssertAValueIsAnObject()
     {
-        $this->expectException(InvalidDataTypeException::class);
+        self::expectException(InvalidDataTypeException::class);
         self::assertNull($this->strict->assertIsObject(new \stdClass()));
         $this->strict->assertIsObject([]);
     }
 
     public function testWillAssertAValueIsACallable()
     {
-        $this->expectException(InvalidDataTypeException::class);
+        self::expectException(InvalidDataTypeException::class);
         self::assertNull($this->strict->assertIsCallable(function () {}));
         $this->strict->assertIsCallable('1.1');
     }
 
     public function testWillAssertAValueIsAResource()
     {
-        $this->expectException(InvalidDataTypeException::class);
+        self::expectException(InvalidDataTypeException::class);
         self::assertNull($this->strict->assertIsResource(fopen('php://memory', 'r')));
         $this->strict->assertIsResource('1.1');
     }
 
     public function testWillAssertAnObjectByItsShortName()
     {
-        $this->expectException(InvalidDataTypeException::class);
+        self::expectException(InvalidDataTypeException::class);
         self::assertNull(
             $this->strict->assertIsFuzzyObject($this->strict, 'DataTypeValidator')
         );
@@ -94,7 +92,7 @@ class DataTypeValidatorAssertTest extends TestCase
 
     public function testWillAssertAnObjectByItsFullName()
     {
-        $this->expectException(InvalidDataTypeException::class);
+        self::expectException(InvalidDataTypeException::class);
         self::assertNull(
             $this->strict->assertIsSpecificObject($this->strict, DataTypeValidator::class)
         );
