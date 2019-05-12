@@ -1,6 +1,8 @@
 # DataTypeValidator
 
 [![TravisCI](https://travis-ci.org/phpexpertsinc/DataTypeValidator.svg?branch=master)](https://travis-ci.org/phpexpertsinc/DataTypeValidator)
+[![Maintainability](https://api.codeclimate.com/v1/badges/5d56aa8b847dce751598/maintainability)](https://codeclimate.com/github/phpexpertsinc/DataTypeValidator/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/5d56aa8b847dce751598/test_coverage)](https://codeclimate.com/github/phpexpertsinc/DataTypeValidator/test_coverage)
 
 DataTypeValidator is a PHP Experts, Inc., Project designed for easy data type validation.
 
