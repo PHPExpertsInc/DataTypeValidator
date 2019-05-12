@@ -1,0 +1,11 @@
+{
+	"bootstrap": "vendor/autoload.php",
+	"path": "benchmarks",
+	"reports": {
+		"validator": {
+			"extends": "aggregate",
+			"title": "PHPExperts\\Validator vs. Native functions.",
+			"description": "How much worse could it really be?"
+		}
+	}
+}

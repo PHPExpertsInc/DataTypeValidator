@@ -1,0 +1,41 @@
+{
+    "name": "phpexperts/datatype-validator",
+    "type": "library",
+    "description": "An easy to use data type validator (both strict and fuzzy).",
+    "keywords": [
+        "data type",
+        "validator",
+        "validation"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "PHP Experts, Inc.",
+            "homepage": "https://www.phpexperts.pro/"
+        },
+        {
+            "name": "Theodore R. Smith",
+            "homepage": "https://www.linkedin.com/in/tedrsmith"
+        }
+    ],
+    "require": {
+        "php": ">=7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.1",
+        "symfony/var-dumper": "^4.2",
+        "phpstan/phpstan": "^0.11.6",
+        "carbondate/carbon": "^1.33",
+        "phpbench/phpbench": "^0.16.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHPExperts\\DataTypeValidator\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PHPExperts\\DataTypeValidator\\Tests\\": "tests/"
+        }
+    }
+}
