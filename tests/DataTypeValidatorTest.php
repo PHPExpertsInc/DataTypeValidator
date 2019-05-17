@@ -110,7 +110,7 @@ class DataTypeValidatorTest extends TestCase
         self::assertTrue($this->strict->validate($data, $rules), 'Invalid data validated :o');
     }
 
-    public function testWillSilentlyIgnoreRulesWithNoData()
+    public function testWillSilentlyIgnoreNullableRulesWithNoData()
     {
         $data = [
             'name'     => 'Cheyenne',
@@ -119,9 +119,9 @@ class DataTypeValidatorTest extends TestCase
 
         $rules = [
             'name'     => 'string',
-            'age'      => 'int',
-            'birthday' => 'Carbon',
-            'daysOld'  => 'float',
+            'age'      => '?int',
+            'birthday' => '?Carbon',
+            'daysOld'  => 'null|float',
             'favFood'  => 'string',
         ];
 
