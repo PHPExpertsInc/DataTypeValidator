@@ -19,7 +19,7 @@ use LogicException;
 final class DataTypeValidator implements IsA
 {
     /** @var IsADataType */
-    protected $isA;
+    private $isA;
 
     public function __construct(IsADataType $isA)
     {
@@ -165,6 +165,32 @@ final class DataTypeValidator implements IsA
     public function validate(array $values, array $rules): bool
     {
         $reasons = [];
+        foreach ($rules as $key => $expectedType) {
+            if (!$this->isString($expectedType)) {
+                throw new LogicException("The data type for $key is not a string.");
+            }
+
+            try {
+                $this->validateValue($values[$key] ?? null, $expectedType);
+            } catch (InvalidDataTypeException $e) {
+                $expectedType = $this->extractNullableProperty($expectedType);
+                $reasons[$key] = "$key is not a valid $expectedType";
+            }
+        }
+
+        if (!empty($reasons)) {
+            $count = count($reasons);
+            $s = $count > 1 ? 's': '';
+            $wasWere = $count > 1 ? 'were' : 'was';
+            throw new InvalidDataTypeException("There $wasWere $count validation error{$s}.", $reasons);
+        }
+
+        return true;
+    }
+
+    public function validateOrig(array $values, array $rules): bool
+    {
+        $reasons = [];
         foreach ($values as $key => $value) {
             if (empty($rules[$key])) {
                 continue;
@@ -185,22 +211,23 @@ final class DataTypeValidator implements IsA
         if (!empty($reasons)) {
             $count = count($reasons);
             $s = $count > 1 ? 's': '';
-            throw new InvalidDataTypeException("There were $count validation error{$s}.", $reasons);
+            $wasWere = $count > 1 ? 'were' : 'was';
+            throw new InvalidDataTypeException("There $wasWere $count validation error{$s}.", $reasons);
         }
 
         return true;
     }
 
-    protected function validateValue($value, string $expectedType)
+    private function validateValue($value, string $expectedType)
     {
         // Allow nullable types.
-        if ($expectedType[0] === '?') {
+        $nullableType = $this->extractNullableProperty($expectedType);
+        if ($nullableType !== $expectedType) {
             if ($value === null) {
                 return;
             }
 
-            // Then strip it out of the expected type.
-            $expectedType = substr($expectedType, 1);
+            $expectedType = $nullableType;
         }
 
         // Traditional values.
@@ -217,5 +244,17 @@ final class DataTypeValidator implements IsA
         }
 
         $this->assertIsFuzzyObject($value, $expectedType);
+    }
+
+    private function extractNullableProperty(string $expectedType): string
+    {
+        if ($expectedType[0] === '?' || substr($expectedType, 0, 5) === 'null|') {
+            $nullTokenPos = $expectedType[0] === '?' ? 1 : 5;
+
+            // Then strip it out of the expected type.
+            $expectedType = substr($expectedType, $nullTokenPos ?? 1);
+        }
+
+        return $expectedType;
     }
 }

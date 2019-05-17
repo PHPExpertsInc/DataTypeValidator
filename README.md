@@ -104,7 +104,7 @@ PHPExperts\DataTypeValidator\DataTypeValidator
  ✔ Can bulk validate a data array  
  ✔ Will return an array of invalid keys with explanations  
  ✔ Will silently ignore data not in the rules  
- ✔ Will silently ignore rules with no data  
+ ✔ Will silently ignore nullable rules with no data  
  ✔ Data cannot be null by default  
  ✔ Any data type that starts with a '?' is nullable  
  ✔ Will throw a logic exception if a non string rule is given  
