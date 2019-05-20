@@ -26,6 +26,11 @@ final class DataTypeValidator implements IsA
         $this->isA = $isA;
     }
 
+    public function getValidationType(): string
+    {
+        return get_class($this->isA);
+    }
+
     public function isBool($value): bool
     {
         return $this->isA->isBool($value);

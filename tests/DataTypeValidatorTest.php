@@ -65,6 +65,12 @@ class DataTypeValidatorTest extends TestCase
         self::assertTrue($this->strict->validate($data, $rules));
     }
 
+    public function testWillReturnTheNameOfTheDataValidatorLogic()
+    {
+        self::assertSame(IsAStrictDataType::class, $this->strict->getValidationType());
+        self::assertSame(IsAFuzzyDataType::class, $this->fuzzy->getValidationType());
+    }
+
     public function testWillReturnAnArrayOfInvalidKeysWithExplanations()
     {
         $data = [

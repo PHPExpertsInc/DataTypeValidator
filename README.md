@@ -102,6 +102,7 @@ phpbench run --report=aggregate
 
 PHPExperts\DataTypeValidator\DataTypeValidator  
  ✔ Can bulk validate a data array  
+ ✔ Will return the name of the data validator logic  
  ✔ Will return an array of invalid keys with explanations  
  ✔ Will silently ignore data not in the rules  
  ✔ Will silently ignore nullable rules with no data  
