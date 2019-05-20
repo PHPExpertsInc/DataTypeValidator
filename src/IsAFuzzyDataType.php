@@ -23,12 +23,12 @@ class IsAFuzzyDataType extends IsAStrictDataType
 
     public function isInt($value): bool
     {
-        return is_int($value) || filter_var($value, FILTER_VALIDATE_INT);
+        return is_int($value) || filter_var($value, FILTER_VALIDATE_INT) !== false;
     }
 
     public function isFloat($value): bool
     {
-        return is_float($value) || filter_var($value, FILTER_VALIDATE_FLOAT);
+        return is_float($value) || filter_var($value, FILTER_VALIDATE_FLOAT) !== false;
     }
 
     public function isString($value): bool
