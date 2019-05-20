@@ -188,36 +188,6 @@ final class DataTypeValidator implements IsA
         return true;
     }
 
-    public function validateOrig(array $values, array $rules): bool
-    {
-        $reasons = [];
-        foreach ($values as $key => $value) {
-            if (empty($rules[$key])) {
-                continue;
-            }
-
-            $expectedType = $rules[$key];
-            if (!$this->isString($expectedType)) {
-                throw new LogicException("The data type for $key is not a string.");
-            }
-
-            try {
-                $this->validateValue($value, $expectedType);
-            } catch (InvalidDataTypeException $e) {
-                $reasons[$key] = "$key is not a valid $expectedType";
-            }
-        }
-
-        if (!empty($reasons)) {
-            $count = count($reasons);
-            $s = $count > 1 ? 's': '';
-            $wasWere = $count > 1 ? 'were' : 'was';
-            throw new InvalidDataTypeException("There $wasWere $count validation error{$s}.", $reasons);
-        }
-
-        return true;
-    }
-
     private function validateValue($value, string $expectedType)
     {
         // Allow nullable types.
