@@ -38,14 +38,7 @@ class DataTypeValidatorTypesTest extends TestCase
 
     private function getDataByType(string $dataType, array $dataAndTypes): array
     {
-        $out = [];
-        foreach ($dataAndTypes as [$type, $value]) {
-            if ($type === $dataType) {
-                $out[] = $value;
-            }
-        }
-
-        return $out;
+        return DataTypesLists::getDataByType($dataType, $dataAndTypes);
     }
 
     public function testWillValidateBoolsStrictly()
@@ -86,7 +79,7 @@ class DataTypeValidatorTypesTest extends TestCase
             self::assertFalse($this->strict->isFloat($value), print_r($value, true));
         }
     }
-    
+
     public function testWillValidateStringsStrictly()
     {
         $values = $this->getDataByType('string', DataTypesLists::getValidStrictDataAndTypes());
@@ -222,8 +215,8 @@ class DataTypeValidatorTypesTest extends TestCase
         }
 
         $values = $this->getDataByType('int', DataTypesLists::getInvalidFuzzyDataAndTypes());
-        foreach ($values as $value) {
-            self::assertFalse($this->fuzzy->isInt($value), print_r($value, true));
+        foreach ($values as $index => $value) {
+            self::assertFalse($this->fuzzy->isInt($value), print_r($value, true) . ' is a valid int');
         }
     }
 
@@ -263,6 +256,24 @@ class DataTypeValidatorTypesTest extends TestCase
         $values = $this->getDataByType('array', DataTypesLists::getInvalidFuzzyDataAndTypes());
         foreach ($values as $value) {
             self::assertFalse($this->fuzzy->isArray($value), print_r($value, true));
+        }
+    }
+
+    public function testWillValidateArraysOfSomething()
+    {
+        $arrays = [
+            'int'    => $this->getDataByType('int', DataTypesLists::getValidStrictDataAndTypes()),
+            'bool'   => $this->getDataByType('bool', DataTypesLists::getValidStrictDataAndTypes()),
+            'float'  => $this->getDataByType('float', DataTypesLists::getValidStrictDataAndTypes()),
+            'string' => $this->getDataByType('string', DataTypesLists::getValidStrictDataAndTypes()),
+            'isAStrictDataType'     => [new IsAStrictDataType(), new IsAStrictDataType(), new IsAStrictDataType()],
+            'isAFuzzyDataType'      => [new IsAFuzzyDataType(), new IsAFuzzyDataType(), new IsAFuzzyDataType()],
+            isAFuzzyDataType::class => [new IsAFuzzyDataType(), new IsAFuzzyDataType(), new IsAFuzzyDataType()],
+        ];
+
+        foreach ($arrays as $expectedType => $array) {
+            self::assertTrue($this->fuzzy->isArrayOfSomething($array, $expectedType), "An array of {$expectedType}s didn't validate.");
+            self::assertTrue($this->strict->isArrayOfSomething($array, $expectedType), "An array of {$expectedType}s didn't validate.");
         }
     }
 }

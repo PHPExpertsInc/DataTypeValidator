@@ -16,11 +16,14 @@ namespace PHPExperts\DataTypeValidator;
 
 interface IsA
 {
+    public const KNOWN_TYPES = ['string', 'int', 'array', 'bool', 'float', 'double', 'object', 'callable', 'resource'];
+
     public function isBool($value): bool;
     public function isInt($value): bool;
     public function isFloat($value): bool;
     public function isString($value): bool;
     public function isArray($value): bool;
+    public function isArrayOfSomething($values, string $dataType): bool;
     public function isObject($value): bool;
     public function isCallable($value): bool;
     public function isResource($value): bool;

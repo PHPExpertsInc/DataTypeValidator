@@ -43,6 +43,21 @@ class IsAStrictDataType extends IsADataType
         return is_array($value);
     }
 
+    public function isArrayOfSomething($values, string $dataType): bool
+    {
+        if (!$this->isArray($values)) {
+            return false;
+        }
+
+        foreach ($values as $value) {
+            if (!$this->isType($value, $dataType)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function isObject($value): bool
     {
         return is_object($value);

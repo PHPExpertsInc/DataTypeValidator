@@ -52,21 +52,31 @@ class IsAFuzzyDataTypeTest extends TestCase
     {
         $object = new IsAFuzzyDataType();
 
-        self::assertTrue($this->isA->isType($object, 'fuzzy', 'IsAFuzzyDataType'));
-        self::assertFalse($this->isA->isType($object, 'fuzzy', 'DoesntExist'));
-        self::assertFalse($this->isA->isType($object, 'fuzzy', IsAFuzzyDataType::class));
-        self::assertFalse($this->isA->isType('string', 'fuzzy', 'IsAFuzzyDataType'));
+        self::assertFalse($this->isA->isType($object, 'DoesntExist'));
+        self::assertTrue($this->isA->isType($object, 'IsAFuzzyDataType'));
+        self::assertFalse($this->isA->isType($object, 'DoesntExist'));
+        self::assertFalse($this->isA->isType('string', 'IsAFuzzyDataType'));
+        self::assertTrue($this->isA->isFuzzyObject($object, 'IsAFuzzyDataType'));
+        self::assertFalse($this->isA->isFuzzyObject($object, IsAFuzzyDataType::class));
+
     }
 
     public function testWillMatchSpecificClasses()
     {
         $object = new IsAFuzzyDataType();
 
-        self::assertTrue($this->isA->isType($object, 'specific', IsAFuzzyDataType::class));
-        self::assertFalse($this->isA->isType($object, 'specific', 'IsAFuzzyDataType'));
-        self::assertFalse($this->isA->isType($object, 'specific', 'IsAFuzzyDataType'));
-        self::assertFalse($this->isA->isType($object, 'specific', 'IsAFuzzyDataType'));
-        self::assertFalse($this->isA->isType($object, 'specific', 'DoesntExist'));
-        self::assertFalse($this->isA->isType('string', 'specific', IsAFuzzyDataType::class));
+        self::assertTrue($this->isA->isType($object, IsAFuzzyDataType::class));
+        self::assertFalse($this->isA->isSpecificObject($object, 'IsAFuzzyDataType'));
+        self::assertTrue($this->isA->isSpecificObject($object, IsAFuzzyDataType::class));
+    }
+
+    public function testWillWorkWithAnArrayOfSomething()
+    {
+        self::assertTrue($this->isA->isArrayOfSomething([1, 2, 3], 'int'));
+        self::assertTrue($this->isA->isArrayOfSomething([1.0, 2, 3], 'int'));
+        self::assertTrue($this->isA->isArrayOfSomething([1.0, 2.1, 3.3], 'float'));
+        self::assertTrue($this->isA->isArrayOfSomething([1, 2, 3], 'float'));
+
+        self::assertFalse($this->isA->isArrayOfSomething('asdf', 'string'));
     }
 }

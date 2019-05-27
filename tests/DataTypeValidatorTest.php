@@ -192,6 +192,68 @@ class DataTypeValidatorTest extends TestCase
         }
     }
 
+    /** @testdox Any data type that ends with '[]' is an array of X*/
+    public function testAnyDataTypeThatEndsWithABracketsIsAnArrayOfX()
+    {
+        $goodValues = [
+            'dates'   => [Carbon::now(), Carbon::now()->subDay()],
+            'ints'    => [1, 2, 3],
+            'floats'  => [1.0, 2.2],
+            'strings' => ['hi', 'bye'],
+        ];
+
+        $badValues = [
+            'dates'   => ['2019-05-27', Carbon::now()->subDay()],
+            'ints'    => [1, 2.2, 3],
+            'floats'  => [1.0, 2.2, 'asdf'],
+            'strings' => ['hi', 'bye', 'asdf', 4],
+        ];
+
+        $rules = [
+            'dates'   => '?Carbon[]',
+            'ints'    => '?int[]',
+            'floats'  => '?float[]',
+            'strings' => '?string[]',
+        ];
+
+        $expected = [
+            "dates"   => "dates is not a valid array of ?Carbon[]: Index '0' is not a valid 'Carbon'.",
+            "ints"    => "ints is not a valid array of ?int[]: Index '1' is not a valid 'int'.",
+            "floats"  => "floats is not a valid array of ?float[]: Index '2' is not a valid 'float'.",
+            "strings" => "strings is not a valid array of ?string[]: Index '3' is not a valid 'string'.",
+        ];
+
+        self::assertTrue($this->fuzzy->validate($goodValues, $rules));
+        self::assertTrue($this->strict->validate($goodValues, $rules));
+
+        try {
+            $this->fuzzy->validate($badValues, $rules);
+        } catch (InvalidDataTypeException $e) {
+            self::assertSame('There were 4 validation errors.', $e->getMessage());
+            self::assertEquals($expected, $e->getReasons());
+        }
+
+        try {
+            $this->strict->validate($badValues, $rules);
+        } catch (InvalidDataTypeException $e) {
+            self::assertSame('There were 4 validation errors.', $e->getMessage());
+            self::assertEquals($expected, $e->getReasons());
+        }
+
+        $nullArray = [
+            'ints' => null,
+        ];
+
+        $rules = [
+            'ints' => 'int[]'
+        ];
+
+        try {
+            $this->fuzzy->validate($nullArray, $rules);
+        } catch (InvalidDataTypeException $e) {
+        }
+    }
+
     public function testWillThrowALogicExceptionIfANonStringRuleIsGiven()
     {
         self::expectException('LogicException');
