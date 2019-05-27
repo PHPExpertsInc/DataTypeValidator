@@ -97,17 +97,15 @@ class DataTypeValidatorAssertTest extends TestCase
     {
         self::expectException(InvalidDataTypeException::class);
         self::assertNull(
-            $this->strict->assertIsFuzzyObject($this->strict, 'DataTypeValidator')
+            $this->strict->assertIsSpecificObject($this->strict, 'DataTypeValidator')
         );
-        $this->strict->assertIsFuzzyObject($this->strict, 'doesntnexist');
+        $this->strict->assertIsSpecificObject($this->strict, 'doesntnexist');
     }
 
     public function testWillAssertAnObjectByItsFullName()
     {
-        self::expectException(InvalidDataTypeException::class);
         self::assertNull(
             $this->strict->assertIsSpecificObject($this->strict, DataTypeValidator::class)
         );
-        $this->strict->assertIsSpecificObject($this->strict, 'DataTypeValidator');
     }
 }

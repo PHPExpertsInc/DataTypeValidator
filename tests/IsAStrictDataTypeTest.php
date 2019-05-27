@@ -52,21 +52,21 @@ class IsAStrictDataTypeTest extends TestCase
     {
         $object = new IsAStrictDataType();
 
-        self::assertTrue($this->isA->isType($object, 'fuzzy', 'IsAStrictDataType'));
-        self::assertFalse($this->isA->isType($object, 'fuzzy', 'DoesntExist'));
-        self::assertFalse($this->isA->isType($object, 'fuzzy', IsAStrictDataType::class));
-        self::assertFalse($this->isA->isType('string', 'fuzzy', 'IsAStrictDataType'));
+        self::assertTrue($this->isA->isType($object, 'IsAStrictDataType'));
+        self::assertFalse($this->isA->isType($object, 'DoesntExist'));
+        self::assertFalse($this->isA->isType('string', 'IsAStrictDataType'));
+        self::assertTrue($this->isA->isFuzzyObject($object, 'IsAStrictDataType'));
+        self::assertFalse($this->isA->isFuzzyObject($object, IsAStrictDataType::class));
     }
 
     public function testWillMatchSpecificClasses()
     {
         $object = new IsAStrictDataType();
 
-        self::assertTrue($this->isA->isType($object, 'specific', IsAStrictDataType::class));
-        self::assertFalse($this->isA->isType($object, 'specific', 'IsAStrictDataType'));
-        self::assertFalse($this->isA->isType($object, 'specific', 'IsAStrictDataType'));
-        self::assertFalse($this->isA->isType($object, 'specific', 'IsAStrictDataType'));
-        self::assertFalse($this->isA->isType($object, 'specific', 'DoesntExist'));
-        self::assertFalse($this->isA->isType('string', 'specific', IsAStrictDataType::class));
+        self::assertTrue($this->isA->isType($object,  IsAStrictDataType::class));
+        self::assertFalse($this->isA->isType($object, 'DoesntExist'));
+        self::assertFalse($this->isA->isSpecificObject('string', IsAStrictDataType::class));
+        self::assertTrue($this->isA->isSpecificObject($object, IsAStrictDataType::class));
+        self::assertFalse($this->isA->isSpecificObject($object, 'IsAStrictDataType'));
     }
 }

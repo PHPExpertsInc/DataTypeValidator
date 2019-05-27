@@ -16,29 +16,15 @@ namespace PHPExperts\DataTypeValidator;
 
 abstract class IsADataType implements IsA
 {
-    /**
-     * @internal
-     * @param mixed ...$args
-     * @return bool
-     */
-    public function isFuzzy(...$args): bool
-    {
-        return $this->isFuzzyObject(...$args);
-    }
-
-    /**
-     * @internal
-     * @param mixed ...$args
-     * @return bool
-     */
-    public function isSpecific(...$args): bool
-    {
-        return $this->isSpecificObject(...$args);
-    }
-
-    public function isType($value, $dataType, string $extra = null): bool
+    public function isType($value, $dataType): bool
     {
         $isA = "is{$dataType}";
-        return $this->$isA($value, $extra);
+
+        if (!in_array($dataType, IsA::KNOWN_TYPES)) {
+            $isA = strpos($dataType, '\\') !== false ? 'isSpecificObject' : 'isFuzzyObject';
+        }
+
+        // Thank you, PHP devs, for letting me throw on extra function parameters without even throwing a warning. /no-sarc
+        return $this->$isA($value, $dataType);
     }
 }

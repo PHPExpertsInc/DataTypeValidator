@@ -130,25 +130,28 @@ final class DataTypeValidator implements IsA
     }
 
     /** @throws InvalidDataTypeException */
-    public function assertIsFuzzyObject($value, string $shortName)
+    public function assertIsSpecificObject($value, string $className)
     {
-        $this->assertIsType($value, 'fuzzy', $shortName);
+        $this->assertIsType($value, $className);
+    }
+
+    private function assertIsArrayOfStuff($values, string $dataType)
+    {
+//        if ($dataType)
     }
 
     /** @throws InvalidDataTypeException */
-    public function assertIsSpecificObject($value, string $fullName)
-    {
-        $this->assertIsType($value, 'specific', $fullName);
-    }
-
-    /** @throws InvalidDataTypeException */
-    public function assertIsType($value, $dataType, string $extra = null)
+    public function assertIsType($value, $dataType): void
     {
         // We can just let PHP deal with user error when it comes to undefined method names :-/
         $isA = "is{$dataType}";
 
+        if (!in_array($dataType, IsA::KNOWN_TYPES)) {
+            $isA = strpos($dataType, '\\') !== false ? 'isSpecificObject' : 'isFuzzyObject';
+        }
+
         // Thank you, PHP devs, for letting me throw on extra function parameters without even throwing a warning. /no-sarc
-        if ($this->isA->$isA($value, $extra) !== true) {
+        if ($this->isA->$isA($value, $dataType) !== true) {
             $aAn = in_array($dataType[0], ['a', 'e', 'i', 'o', 'u']) ? 'an' : 'a';
             // Handle data types that cannot be converted to strings.
             if (!in_array(gettype($value), ['string', 'int', 'float', 'double'])) {
@@ -206,19 +209,14 @@ final class DataTypeValidator implements IsA
         }
 
         // Traditional values.
-        if (in_array($expectedType, ['string', 'int', 'bool', 'float', 'array', 'object', 'callable', 'resource'])) {
+        if (in_array($expectedType, IsA::KNOWN_TYPES)) {
             $this->assertIsType($value, $expectedType);
 
             return;
         }
+
         // See if it is a specific class:
-        elseif (strpos($expectedType, '\\') !== false) {
-            $this->assertIsSpecificObject($value, $expectedType);
-
-            return;
-        }
-
-        $this->assertIsFuzzyObject($value, $expectedType);
+        $this->assertIsSpecificObject($value, $expectedType);
     }
 
     private function extractNullableProperty(string $expectedType): string
