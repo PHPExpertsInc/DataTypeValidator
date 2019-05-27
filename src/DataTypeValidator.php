@@ -56,6 +56,11 @@ final class DataTypeValidator implements IsA
         return $this->isA->isArray($value);
     }
 
+    public function isArrayOfSomething($values, string $dataType): bool
+    {
+        return $this->isA->isArrayOfSomething($values, $dataType);
+    }
+
     public function isObject($value): bool
     {
         return $this->isA->isObject($value);
@@ -135,9 +140,15 @@ final class DataTypeValidator implements IsA
         $this->assertIsType($value, $className);
     }
 
-    private function assertIsArrayOfStuff($values, string $dataType)
+    public function assertIsArrayOfSomething($values, string $dataType): void
     {
-//        if ($dataType)
+        $this->assertIsArray($values);
+
+        foreach ($values as $i => $value) {
+            if (!$this->isA->isType($value, $dataType)) {
+                throw new InvalidDataTypeException("Index '$i' is not a valid '$dataType'.");
+            }
+        }
     }
 
     /** @throws InvalidDataTypeException */
@@ -176,6 +187,17 @@ final class DataTypeValidator implements IsA
         foreach ($rules as $key => $expectedType) {
             if (!$this->isString($expectedType)) {
                 throw new LogicException("The data type for $key is not a string.");
+            }
+
+            // Handle arrays-of-something.
+            if (strpos($expectedType, '[]') !== false) {
+                try {
+                    $this->validateArraysOfSomething($values[$key] ?? null, $expectedType);
+                } catch (InvalidDataTypeException $e) {
+                    $reasons[$key] = "$key is not a valid array of $expectedType: " . $e->getMessage();
+                }
+
+                continue;
             }
 
             try {
@@ -217,6 +239,17 @@ final class DataTypeValidator implements IsA
 
         // See if it is a specific class:
         $this->assertIsSpecificObject($value, $expectedType);
+    }
+
+    private function validateArraysOfSomething($values, string $expectedType)
+    {
+        // Allow nullable types.
+        $nullableType = $this->extractNullableProperty($expectedType);
+        if ($nullableType !== $expectedType) {
+            $expectedType = $nullableType;
+        }
+
+        $this->assertIsArrayOfSomething($values, substr($expectedType, 0, -2));
     }
 
     private function extractNullableProperty(string $expectedType): string

@@ -69,4 +69,14 @@ class IsAFuzzyDataTypeTest extends TestCase
         self::assertFalse($this->isA->isSpecificObject($object, 'IsAFuzzyDataType'));
         self::assertTrue($this->isA->isSpecificObject($object, IsAFuzzyDataType::class));
     }
+
+    public function testWillWorkWithAnArrayOfSomething()
+    {
+        self::assertTrue($this->isA->isArrayOfSomething([1, 2, 3], 'int'));
+        self::assertTrue($this->isA->isArrayOfSomething([1.0, 2, 3], 'int'));
+        self::assertTrue($this->isA->isArrayOfSomething([1.0, 2.1, 3.3], 'float'));
+        self::assertTrue($this->isA->isArrayOfSomething([1, 2, 3], 'float'));
+
+        self::assertFalse($this->isA->isArrayOfSomething('asdf', 'string'));
+    }
 }

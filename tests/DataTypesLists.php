@@ -16,6 +16,18 @@ namespace PHPExperts\DataTypeValidator\Tests;
 
 abstract class DataTypesLists
 {
+    public static function getDataByType(string $dataType, array $dataAndTypes): array
+    {
+        $out = [];
+        foreach ($dataAndTypes as [$type, $value]) {
+            if ($type === $dataType) {
+                $out[] = $value;
+            }
+        }
+
+        return $out;
+    }
+
     public static function getValidStrictDataAndTypes(): array
     {
         return [

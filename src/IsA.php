@@ -23,6 +23,7 @@ interface IsA
     public function isFloat($value): bool;
     public function isString($value): bool;
     public function isArray($value): bool;
+    public function isArrayOfSomething($values, string $dataType): bool;
     public function isObject($value): bool;
     public function isCallable($value): bool;
     public function isResource($value): bool;

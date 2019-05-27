@@ -69,4 +69,14 @@ class IsAStrictDataTypeTest extends TestCase
         self::assertTrue($this->isA->isSpecificObject($object, IsAStrictDataType::class));
         self::assertFalse($this->isA->isSpecificObject($object, 'IsAStrictDataType'));
     }
+
+    public function testWillWorkWithAnArrayOfSomething()
+    {
+        self::assertTrue($this->isA->isArrayOfSomething([1, 2, 3], 'int'));
+        self::assertFalse($this->isA->isArrayOfSomething([1.0, 2, 3], 'int'));
+        self::assertTrue($this->isA->isArrayOfSomething([1.0, 2.1, 3.3], 'float'));
+        self::assertFalse($this->isA->isArrayOfSomething([1, 2, 3], 'float'));
+
+        self::assertFalse($this->isA->isArrayOfSomething('asdf', 'string'));
+    }
 }

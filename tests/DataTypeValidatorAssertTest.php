@@ -37,6 +37,11 @@ class DataTypeValidatorAssertTest extends TestCase
         parent::setUp();
     }
 
+    private function getDataByType(string $dataType, array $dataAndTypes): array
+    {
+        return DataTypesLists::getDataByType($dataType, $dataAndTypes);
+    }
+
     public function testWillAssertAValueIsABool()
     {
         self::expectException(InvalidDataTypeException::class);
@@ -107,5 +112,41 @@ class DataTypeValidatorAssertTest extends TestCase
         self::assertNull(
             $this->strict->assertIsSpecificObject($this->strict, DataTypeValidator::class)
         );
+    }
+
+    public function testWillAssertAnArrayOfSomething()
+    {
+        $goodArrays = [
+            'int'    => $this->getDataByType('int', DataTypesLists::getValidStrictDataAndTypes()),
+            'bool'   => $this->getDataByType('bool', DataTypesLists::getValidStrictDataAndTypes()),
+            'float'  => $this->getDataByType('float', DataTypesLists::getValidStrictDataAndTypes()),
+            'string' => $this->getDataByType('string', DataTypesLists::getValidStrictDataAndTypes()),
+            'isAStrictDataType'     => [new IsAStrictDataType(), new IsAStrictDataType(), new IsAStrictDataType()],
+            'isAFuzzyDataType'      => [new IsAFuzzyDataType(), new IsAFuzzyDataType(), new IsAFuzzyDataType()],
+            isAFuzzyDataType::class => [new IsAFuzzyDataType(), new IsAFuzzyDataType(), new IsAFuzzyDataType()],
+        ];
+
+        foreach ($goodArrays as $expectedType => $array) {
+            self::assertNull($this->fuzzy->assertIsArrayOfSomething($array, $expectedType));
+            self::assertNull($this->strict->assertIsArrayOfSomething($array, $expectedType));
+        }
+
+        $badStrictArrays = [
+            'int' => [['1'], ['1.0'], [1.0]],
+            'bool' => [[0], [1], ['0'], ['1']],
+            'float' => [[0], [1], ['1.1']],
+            'string' => [[1], [1.0]],
+        ];
+
+        foreach ($badStrictArrays as $expectedType => $testArray) {
+            foreach ($testArray as $index => $array) {
+                try {
+                    $this->strict->assertIsArrayOfSomething($array, $expectedType);
+                    $this->fail("Index '$index' validated as a valid $expectedType when it shouldn't have.");
+                } catch (InvalidDataTypeException $e) {
+                    self::assertEquals("Index '0' is not a valid '$expectedType'.", $e->getMessage());
+                }
+            }
+        }
     }
 }
