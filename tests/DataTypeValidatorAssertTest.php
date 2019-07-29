@@ -118,11 +118,17 @@ class DataTypeValidatorAssertTest extends TestCase
     {
         $goodArrays = [
             'int'    => $this->getDataByType('int', DataTypesLists::getValidStrictDataAndTypes()),
+            'int[]'    => $this->getDataByType('int', DataTypesLists::getValidStrictDataAndTypes()),
             'bool'   => $this->getDataByType('bool', DataTypesLists::getValidStrictDataAndTypes()),
+            'bool[]'   => $this->getDataByType('bool', DataTypesLists::getValidStrictDataAndTypes()),
             'float'  => $this->getDataByType('float', DataTypesLists::getValidStrictDataAndTypes()),
+            'float[]'  => $this->getDataByType('float', DataTypesLists::getValidStrictDataAndTypes()),
             'string' => $this->getDataByType('string', DataTypesLists::getValidStrictDataAndTypes()),
+            'string[]' => $this->getDataByType('string', DataTypesLists::getValidStrictDataAndTypes()),
             'isAStrictDataType'     => [new IsAStrictDataType(), new IsAStrictDataType(), new IsAStrictDataType()],
+            'isAStrictDataType[]'     => [new IsAStrictDataType(), new IsAStrictDataType(), new IsAStrictDataType()],
             'isAFuzzyDataType'      => [new IsAFuzzyDataType(), new IsAFuzzyDataType(), new IsAFuzzyDataType()],
+            'isAFuzzyDataType[]'      => [new IsAFuzzyDataType(), new IsAFuzzyDataType(), new IsAFuzzyDataType()],
             isAFuzzyDataType::class => [new IsAFuzzyDataType(), new IsAFuzzyDataType(), new IsAFuzzyDataType()],
         ];
 

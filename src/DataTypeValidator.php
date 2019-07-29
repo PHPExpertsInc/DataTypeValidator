@@ -144,6 +144,7 @@ final class DataTypeValidator implements IsA
     {
         $this->assertIsArray($values);
 
+        $dataType = substr($dataType, -2) === '[]' ? substr($dataType, 0, -2) : $dataType;
         foreach ($values as $i => $value) {
             if (!$this->isA->isType($value, $dataType)) {
                 throw new InvalidDataTypeException("Index '$i' is not a valid '$dataType'.");
