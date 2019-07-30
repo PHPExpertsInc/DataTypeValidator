@@ -254,6 +254,62 @@ class DataTypeValidatorTest extends TestCase
         }
     }
 
+    public function testWillAllowAnEmptyArrayOfSomething()
+    {
+        $nullableTypes = [
+            '?int[]',
+            '?bool[]',
+            '?float[]',
+            '?string[]',
+            '?isAStrictDataType[]',
+            '?isAFuzzyDataType[]',
+            'null|int[]',
+            'null|bool[]',
+            'null|float[]',
+            'null|string[]',
+            'null|isAStrictDataType[]',
+            'null|isAFuzzyDataType[]',
+            '?' . isAFuzzyDataType::class . '[]',
+            'null|' . isAFuzzyDataType::class . '[]',
+        ];
+
+        $rules = array_combine($nullableTypes, $nullableTypes);
+        $values = array_combine($nullableTypes, array_fill(0, count($nullableTypes), []));
+
+        foreach ($values as $expectedType => $array) {
+            self::assertTrue($this->fuzzy->validate($values, $rules));
+            self::assertTrue($this->strict->validate($values, $rules));
+        }
+    }
+
+    public function testWillAllowANullableArrayOfSomething()
+    {
+        $nullableTypes = [
+            '?int[]',
+            '?bool[]',
+            '?float[]',
+            '?string[]',
+            '?isAStrictDataType[]',
+            '?isAFuzzyDataType[]',
+            'null|int[]',
+            'null|bool[]',
+            'null|float[]',
+            'null|string[]',
+            'null|isAStrictDataType[]',
+            'null|isAFuzzyDataType[]',
+            '?' . isAFuzzyDataType::class . '[]',
+            'null|' . isAFuzzyDataType::class . '[]',
+        ];
+
+        $rules = array_combine($nullableTypes, $nullableTypes);
+        $values = array_combine($nullableTypes, array_fill(0, count($nullableTypes), null));
+
+        foreach ($values as $expectedType => $array) {
+            self::assertTrue($this->fuzzy->validate($values, $rules));
+            self::assertTrue($this->strict->validate($values, $rules));
+        }
+    }
+
     public function testWillThrowALogicExceptionIfANonStringRuleIsGiven()
     {
         self::expectException('LogicException');

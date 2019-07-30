@@ -109,6 +109,8 @@ PHPExperts\DataTypeValidator\DataTypeValidator
  ✔ Data cannot be null by default  
  ✔ Any data type that starts with a '?' is nullable  
  ✔ Any data type that ends with '[]' is an array of X  
+ ✔ Will allow an empty array of something  
+ ✔ Will allow a nullable array of something  
  ✔ Will throw a logic exception if a non string rule is given  
 
 PHPExperts\DataTypeValidator\DataTypeValidator: Assertions  

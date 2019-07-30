@@ -140,7 +140,7 @@ final class DataTypeValidator implements IsA
         $this->assertIsType($value, $className);
     }
 
-    public function assertIsArrayOfSomething($values, string $dataType): void
+    public function assertIsArrayOfSomething($values, string $dataType)
     {
         $this->assertIsArray($values);
 
@@ -247,6 +247,11 @@ final class DataTypeValidator implements IsA
         // Allow nullable types.
         $nullableType = $this->extractNullableProperty($expectedType);
         if ($nullableType !== $expectedType) {
+            // If the data type is nullable and the value is null, let's bail early.
+            if ($values === null) {
+                return;
+            }
+
             $expectedType = $nullableType;
         }
 
