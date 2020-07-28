@@ -29,7 +29,7 @@
         "phpunit/phpunit": "7.*|8.*",
         "symfony/var-dumper": "^4.2",
         "phpstan/phpstan": "^0.11.6",
-        "carbondate/carbon": "^1.33",
+        "nesbot/carbon": "^2.37",
         "phpbench/phpbench": "^0.16.9"
     },
     "autoload": {
@@ -41,8 +41,5 @@
         "psr-4": {
             "PHPExperts\\DataTypeValidator\\Tests\\": "tests/"
         }
-    },
-    "config": {
-        "classmap-authoritative": true
     }
 }
