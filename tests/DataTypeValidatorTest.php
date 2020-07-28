@@ -30,7 +30,7 @@ class DataTypeValidatorTest extends TestCase
     /** @var DataTypeValidator */
     private $fuzzy;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->strict = new DataTypeValidator(new IsAStrictDataType());
         $this->fuzzy = new DataTypeValidator(new IsAFuzzyDataType());
@@ -144,7 +144,7 @@ class DataTypeValidatorTest extends TestCase
             'name' => 'string',
         ];
 
-        self::expectException(InvalidDataTypeException::class);
+        $this->expectException(InvalidDataTypeException::class);
         $this->strict->validate($data, $rules);
     }
 
@@ -312,7 +312,7 @@ class DataTypeValidatorTest extends TestCase
 
     public function testWillThrowALogicExceptionIfANonStringRuleIsGiven()
     {
-        self::expectException('LogicException');
+        $this->expectException('LogicException');
         $this->fuzzy->validate(['asdf' => true], ['asdf' => 13]);
     }
 }

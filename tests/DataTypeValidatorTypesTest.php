@@ -28,7 +28,7 @@ class DataTypeValidatorTypesTest extends TestCase
     /** @var DataTypeValidator */
     private $fuzzy;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->strict = new DataTypeValidator(new IsAStrictDataType());
         $this->fuzzy = new DataTypeValidator(new IsAFuzzyDataType());
@@ -177,21 +177,21 @@ class DataTypeValidatorTypesTest extends TestCase
 
     public function testWillValidateObjectsByTheirShortName()
     {
-        $this->assertTrue($this->strict->isFuzzyObject($this->strict, 'DataTypeValidator'));
-        $this->assertTrue($this->fuzzy->isFuzzyObject($this->fuzzy, 'DataTypeValidator'));
-        $this->assertFalse($this->strict->isFuzzyObject($this->strict, 'doesntexist'));
-        $this->assertFalse($this->fuzzy->isFuzzyObject($this->fuzzy, 'doesntexist'));
+        self::assertTrue($this->strict->isFuzzyObject($this->strict, 'DataTypeValidator'));
+        self::assertTrue($this->fuzzy->isFuzzyObject($this->fuzzy, 'DataTypeValidator'));
+        self::assertFalse($this->strict->isFuzzyObject($this->strict, 'doesntexist'));
+        self::assertFalse($this->fuzzy->isFuzzyObject($this->fuzzy, 'doesntexist'));
     }
 
     public function testWillValidateObjectsByTheirFullName()
     {
-        $this->assertTrue($this->strict->isSpecificObject($this->strict, DataTypeValidator::class));
-        $this->assertTrue($this->fuzzy->isSpecificObject($this->fuzzy, DataTypeValidator::class));
+        self::assertTrue($this->strict->isSpecificObject($this->strict, DataTypeValidator::class));
+        self::assertTrue($this->fuzzy->isSpecificObject($this->fuzzy, DataTypeValidator::class));
 
-        $this->assertFalse($this->strict->isSpecificObject($this->strict, 'DataTypeValidator'));
-        $this->assertFalse($this->fuzzy->isSpecificObject($this->fuzzy, 'DataTypeValidator'));
-        $this->assertFalse($this->strict->isSpecificObject($this->strict, 'doesntexist'));
-        $this->assertFalse($this->fuzzy->isSpecificObject($this->fuzzy, 'doesntexist'));
+        self::assertFalse($this->strict->isSpecificObject($this->strict, 'DataTypeValidator'));
+        self::assertFalse($this->fuzzy->isSpecificObject($this->fuzzy, 'DataTypeValidator'));
+        self::assertFalse($this->strict->isSpecificObject($this->strict, 'doesntexist'));
+        self::assertFalse($this->fuzzy->isSpecificObject($this->fuzzy, 'doesntexist'));
     }
 
     public function testCanValidateBoolsLoosely()

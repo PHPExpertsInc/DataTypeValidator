@@ -23,7 +23,7 @@ class IsAStrictDataTypeTest extends TestCase
     /** @var IsAStrictDataType */
     private $isA;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->isA = new IsAStrictDataType();
 
