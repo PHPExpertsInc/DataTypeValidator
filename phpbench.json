@@ -1,11 +1,26 @@
 {
-	"bootstrap": "vendor/autoload.php",
-	"path": "benchmarks",
-	"reports": {
-		"validator": {
-			"extends": "aggregate",
-			"title": "PHPExperts\\Validator vs. Native functions.",
-			"description": "How much worse could it really be?"
-		}
-	}
+    "$schema": "./vendor/phpbench/phpbench/phpbench.schema.json",
+    "runner.bootstrap": "vendor/autoload.php",
+    "runner.php_config":
+    {
+        "opcache.enable": 1,
+        "opcache.enable_cli": 1
+    },
+    "report.generators":
+    {
+        "short":
+        {
+            "extends": "aggregate",
+            "cols": [
+                "benchmark", "subject", "revs", "mem_peak",
+                "best", "mean", "mode", "worst",
+                "stdev", "rstdev",
+                "diff"
+            ],
+            "expressions":
+            {
+                "diff": "percent_diff(mode(suite[\"result_time_avg\"]), mode(result_time_avg))"
+            }
+        }
+    }
 }

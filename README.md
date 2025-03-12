@@ -93,10 +93,14 @@ composer require phpexperts/datatype-validator
 phpbench run --report=aggregate
 ```
 
-| benchmark              | subject        | set | revs | its | mem_peak   | best     | mean     | mode     | worst    | stdev   | rstdev | diff  |
-|------------------------|----------------|-----|------|-----|------------|----------|----------|----------|----------|---------|--------|-------|
-| DataTypeValidatorBench | benchValidator | 0   | 1000 | 5   | 1,421,504b | 52.561μs | 53.824μs | 54.211μs | 54.648μs | 0.769μs | 1.43%  | 3.00x |
-| DataTypeValidatorBench | benchNative    | 0   | 1000 | 5   | 1,357,368b | 20.470μs | 24.246μs | 21.822μs | 30.204μs | 3.833μs | 15.81% | 1.00x |
+PHP v8.4 with opcache enabled
++------------------------+----------------+------+-----------+---------+---------+---------+---------+---------+--------+---------+
+| benchmark              | subject        | revs | mem_peak  | best    | mean    | mode    | worst   | stdev   | rstdev | diff    |
++------------------------+----------------+------+-----------+---------+---------+---------+---------+---------+--------+---------+
+| DataTypeValidatorBench | benchValidator | 1000 | 832.896kb | 4.414μs | 4.803μs | 4.876μs | 5.112μs | 0.233μs | ±4.85% | +2.57%  |
+| DataTypeValidatorBench | benchNative    | 1000 | 832.896kb | 2.670μs | 2.866μs | 2.745μs | 3.356μs | 0.250μs | ±8.71% | -42.25% |
++------------------------+----------------+------+-----------+---------+---------+---------+---------+---------+--------+---------+
+
 
 # Use cases
 

@@ -12,6 +12,8 @@
  * This file is licensed under the MIT License.
  */
 
+namespace PHPExperts\DataTypeValidator\Tests\Benchmark;
+
 use PHPExperts\DataTypeValidator\DataTypeValidator;
 use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\DataTypeValidator\IsAStrictDataType;
