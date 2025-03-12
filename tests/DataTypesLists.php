@@ -3,11 +3,11 @@
 /**
  * This file is part of DataTypeValidator, a PHP Experts, Inc., Project.
  *
- * Copyright © 2019 PHP Experts, Inc.
+ * Copyright © 2019-2025 PHP Experts, Inc.
  * Author: Theodore R. Smith <theodore@phpexperts.pro>
  *  GPG Fingerprint: 4BF8 2613 1C34 87AC D28F  2AD8 EB24 A91D D612 5690
  *  https://www.phpexperts.pro/
- *  https://github.com/phpexpertsinc/DataTypeValidator
+ *  https://github.com/PHPExpertsInc/DataTypeValidator
  *
  * This file is licensed under the MIT License.
  */
@@ -34,12 +34,15 @@ abstract class DataTypesLists
             ['bool',             true],
             ['bool',            false],
 
+            ['int',                 0],
             ['int',                 1],
             ['int',                 5],
             ['int',                 3],
             ['int',               544],
             ['int',               -53],
 
+            ['float',        (float)0],
+            ['float',             0.0],
             ['float',             1.2],
             ['float',             1.0],
             ['float',          51.055],
