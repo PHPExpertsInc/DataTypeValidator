@@ -30,7 +30,7 @@ class DataTypeValidatorTest extends TestCase
     /** @var DataTypeValidator */
     private $fuzzy;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->strict = new DataTypeValidator(new IsAStrictDataType());
         $this->fuzzy = new DataTypeValidator(new IsAFuzzyDataType());

@@ -23,7 +23,7 @@ class IsAFuzzyDataTypeTest extends TestCase
     /** @var IsAFuzzyDataType */
     private $isA;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->isA = new IsAFuzzyDataType();
 
