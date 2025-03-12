@@ -264,7 +264,7 @@ final class DataTypeValidator implements IsA
             $nullTokenPos = $expectedType[0] === '?' ? 1 : 5;
 
             // Then strip it out of the expected type.
-            $expectedType = substr($expectedType, $nullTokenPos ?? 1);
+            $expectedType = substr($expectedType, $nullTokenPos);
         }
 
         return $expectedType;
