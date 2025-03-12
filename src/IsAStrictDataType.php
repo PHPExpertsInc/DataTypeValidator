@@ -90,6 +90,6 @@ class IsAStrictDataType extends IsADataType
             return false;
         }
 
-        return $fullName === get_class($value);
+        return $fullName === $value::class;
     }
 }

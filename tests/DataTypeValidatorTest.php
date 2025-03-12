@@ -250,7 +250,7 @@ class DataTypeValidatorTest extends TestCase
 
         try {
             $this->fuzzy->validate($nullArray, $rules);
-        } catch (InvalidDataTypeException $e) {
+        } catch (InvalidDataTypeException) {
         }
     }
 

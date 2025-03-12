@@ -18,17 +18,13 @@ use LogicException;
 
 final class DataTypeValidator implements IsA
 {
-    /** @var IsADataType */
-    private $isA;
-
-    public function __construct(IsADataType $isA)
+    public function __construct(private IsADataType $isA)
     {
-        $this->isA = $isA;
     }
 
     public function getValidationType(): string
     {
-        return get_class($this->isA);
+        return $this->isA::class;
     }
 
     public function isBool($value): bool
@@ -144,7 +140,7 @@ final class DataTypeValidator implements IsA
     {
         $this->assertIsArray($values);
 
-        $dataType = substr($dataType, -2) === '[]' ? substr($dataType, 0, -2) : $dataType;
+        $dataType = str_ends_with($dataType, '[]') ? substr($dataType, 0, -2) : $dataType;
         foreach ($values as $i => $value) {
             if (!$this->isA->isType($value, $dataType)) {
                 throw new InvalidDataTypeException("Index '$i' is not a valid '$dataType'.");
@@ -159,7 +155,7 @@ final class DataTypeValidator implements IsA
         $isA = "is{$dataType}";
 
         if (!in_array($dataType, IsA::KNOWN_TYPES)) {
-            $isA = strpos($dataType, '\\') !== false ? 'isSpecificObject' : 'isFuzzyObject';
+            $isA = str_contains($dataType, '\\') ? 'isSpecificObject' : 'isFuzzyObject';
         }
 
         // Thank you, PHP devs, for letting me throw on extra function parameters without even throwing a warning. /no-sarc
@@ -191,7 +187,7 @@ final class DataTypeValidator implements IsA
             }
 
             // Handle arrays-of-something.
-            if (strpos($expectedType, '[]') !== false) {
+            if (str_contains($expectedType, '[]')) {
                 try {
                     $this->validateArraysOfSomething($values[$key] ?? null, $expectedType);
                 } catch (InvalidDataTypeException $e) {
@@ -203,7 +199,7 @@ final class DataTypeValidator implements IsA
 
             try {
                 $this->validateValue($values[$key] ?? null, $expectedType);
-            } catch (InvalidDataTypeException $e) {
+            } catch (InvalidDataTypeException) {
                 $expectedType = $this->extractNullableProperty($expectedType);
                 $reasons[$key] = "$key is not a valid $expectedType";
             }
@@ -260,7 +256,7 @@ final class DataTypeValidator implements IsA
 
     private function extractNullableProperty(string $expectedType): string
     {
-        if ($expectedType[0] === '?' || substr($expectedType, 0, 5) === 'null|') {
+        if ($expectedType[0] === '?' || str_starts_with($expectedType, 'null|')) {
             $nullTokenPos = $expectedType[0] === '?' ? 1 : 5;
 
             // Then strip it out of the expected type.

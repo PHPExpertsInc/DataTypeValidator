@@ -21,7 +21,7 @@ abstract class IsADataType implements IsA
         $isA = "is{$dataType}";
 
         if (!in_array($dataType, IsA::KNOWN_TYPES)) {
-            $isA = strpos($dataType, '\\') !== false ? 'isSpecificObject' : 'isFuzzyObject';
+            $isA = str_contains($dataType, '\\') ? 'isSpecificObject' : 'isFuzzyObject';
         }
 
         // Thank you, PHP devs, for letting me throw on extra function parameters without even throwing a warning. /no-sarc
