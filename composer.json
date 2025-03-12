@@ -26,7 +26,7 @@
         "ext-json": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "7.*|8.*",
+        "phpunit/phpunit": "9.*",
         "symfony/var-dumper": "*",
         "phpstan/phpstan": "*",
         "nesbot/carbon": "^2.37",
