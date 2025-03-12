@@ -30,7 +30,8 @@
         "symfony/var-dumper": "^4.2",
         "phpstan/phpstan": "^0.11.6",
         "nesbot/carbon": "^2.37",
-        "phpbench/phpbench": "^0.16.9"
+        "phpbench/phpbench": "^0.16.9",
+        "phpexperts/dockerize": "^12.0"
     },
     "autoload": {
         "psr-4": {
