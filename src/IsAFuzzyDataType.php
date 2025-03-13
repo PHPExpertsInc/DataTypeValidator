@@ -18,9 +18,19 @@ class IsAFuzzyDataType  extends IsADataType implements IsA
 {
     public function isBool(mixed $value): bool
     {
-        return is_bool($value) || $value === null || !in_array(gettype($value), ['object', 'resource', 'unknown type']);
-    }
+        $isSpecialType = in_array(gettype($value), ['object', 'resource', 'unknown type']);
+        if ($isSpecialType === true) {
+            return false;
+        }
 
+        $isBool = is_bool($value);
+        $isNull = $value === null;
+        $isArray = is_array($value);
+        $isLooseValue = in_array($value, [true, false, 0, 1, "0", "1"], true);
+        $isNumericAndGreaterThan0 = is_numeric($value) && $value >= 0.0;
+
+        return $isBool || $isNull || $isArray || $isLooseValue || $isNumericAndGreaterThan0;
+    }
     public function isInt(mixed $value): bool
     {
         if (!is_numeric($value)) {

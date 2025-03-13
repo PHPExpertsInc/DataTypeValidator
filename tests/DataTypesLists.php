@@ -75,13 +75,10 @@ abstract class DataTypesLists
     public static function getValidFuzzyDataAndTypes(): array
     {
         return array_merge([
-            ['bool',           'true'],
-            ['bool',          'false'],
             ['bool',              '0'],
             ['bool',              '1'],
             ['bool',                0],
             ['bool',                1],
-            ['bool',               []],
             ['bool',             null],
 
             ['int',               '1'],
