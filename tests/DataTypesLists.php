@@ -79,6 +79,8 @@ abstract class DataTypesLists
             ['bool',              '1'],
             ['bool',                0],
             ['bool',                1],
+            ['bool',               []],
+            ['bool',            [123]],
             ['bool',             null],
 
             ['int',               '1'],
