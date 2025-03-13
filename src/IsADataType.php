@@ -3,7 +3,7 @@
 /**
  * This file is part of DataTypeValidator, a PHP Experts, Inc., Project.
  *
- * Copyright © 2019 PHP Experts, Inc.
+ * Copyright © 2019-2025 PHP Experts, Inc.
  * Author: Theodore R. Smith <theodore@phpexperts.pro>
  *  GPG Fingerprint: 4BF8 2613 1C34 87AC D28F  2AD8 EB24 A91D D612 5690
  *  https://www.phpexperts.pro/
@@ -13,6 +13,8 @@
  */
 
 namespace PHPExperts\DataTypeValidator;
+
+use ReflectionClass;
 
 abstract class IsADataType implements IsA
 {
@@ -26,5 +28,54 @@ abstract class IsADataType implements IsA
 
         // Thank you, PHP devs, for letting me throw on extra function parameters without even throwing a warning. /no-sarc
         return $this->$isA($value, $dataType);
+    }
+
+    public function isArrayOfSomething($values, string $dataType): bool
+    {
+        if (!$this->isArray($values)) {
+            return false;
+        }
+
+        foreach ($values as $value) {
+            if (!$this->isType($value, $dataType)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    public function isObject($value): bool
+    {
+        return is_object($value);
+    }
+
+    public function isCallable($value): bool
+    {
+        return is_callable($value);
+    }
+
+    public function isResource($value): bool
+    {
+        return is_resource($value);
+    }
+
+    public function isFuzzyObject($value, string $shortName): bool
+    {
+        if (!is_object($value)) {
+            return false;
+        }
+
+        $actualShortName = (new ReflectionClass($value))->getShortName();
+
+        return strtolower($shortName) === strtolower($actualShortName);
+    }
+
+    public function isSpecificObject($value, string $fullName): bool
+    {
+        if (!is_object($value)) {
+            return false;
+        }
+
+        return $fullName === $value::class;
     }
 }
