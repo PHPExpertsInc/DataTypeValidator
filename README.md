@@ -162,6 +162,30 @@ PHPExperts\DataTypeValidator\IsAStrictDataType
  ✔ Will match specific classes  
  ✔ Will work with an array of something  
 
+Extended assertIsAType Tests  
+✔ has extended tests for asserting it is a strict string  
+✔ has extended tests for asserting it is a strict int  
+✔ has extended tests for asserting it is a strict bool  
+✔ has extended tests for asserting it is a strict array  
+✔ has extended tests for asserting it is a strict specific object  
+✔ has extended tests for asserting it is a fuzzy string  
+✔ has extended tests for asserting it is a fuzzy int  
+✔ has extended tests for asserting it is a fuzzy bool  
+✔ has extended tests for asserting it is a fuzzy array  
+✔ has extended tests for asserting it is a fuzzy object  
+✔ has extended tests for asserting it is a fuzzy specific object  
+✔ has extended tests for asserting it is not a strict string  
+✔ has extended tests for asserting it is not a strict int  
+✔ has extended tests for asserting it is not a strict bool  
+✔ has extended tests for asserting it is not a strict array  
+✔ has extended tests for asserting it is not a strict specific object  
+✔ has extended tests for asserting it is not a fuzzy string  
+✔ has extended tests for asserting it is not a fuzzy int  
+✔ has extended tests for asserting it is not a fuzzy bool  
+✔ has extended tests for asserting it is not a fuzzy array  
+✔ has extended tests for asserting it is not a fuzzy object  
+✔ has extended tests for asserting it is not a fuzzy specific object  
+
 ## Testing
 
 ```bash
