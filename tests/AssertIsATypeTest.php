@@ -37,7 +37,8 @@ class AssertIsATypeTest extends TestCase
         $this->fuzzy = new DataTypeValidator(new IsAFuzzyDataType());
     }
 
-    private function assertPassValues($validator, array $values, string $type): void
+    private function assertPassValues(DataTypeValidator $validator, array $values, string $type):
+    void
     {
         foreach ($values as $value) {
             try {
@@ -49,7 +50,8 @@ class AssertIsATypeTest extends TestCase
         $this->assertTrue(true);
     }
 
-    private function assertFailValues($validator, array $values, string $type): void
+    private function assertFailValues(DataTypeValidator $validator, array $values, string $type):
+    void
     {
         foreach ($values as $value) {
             try {
