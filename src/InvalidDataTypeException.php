@@ -22,7 +22,7 @@ class InvalidDataTypeException extends InvalidArgumentException
     /** @var array */
     protected $reasons;
 
-    public function __construct($message, $reasons = [], $code = 0, Throwable $previous = null)
+    public function __construct($message, $reasons = [], $code = 0, ?Throwable $previous = null)
     {
         $this->reasons = $reasons;
 
