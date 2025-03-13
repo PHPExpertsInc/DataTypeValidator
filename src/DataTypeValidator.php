@@ -166,7 +166,7 @@ final class DataTypeValidator implements IsA
         if ($this->isA->$isA($value, $dataType) !== true) {
             $aAn = in_array($dataType[0], ['a', 'e', 'i', 'o', 'u']) ? 'an' : 'a';
             // Handle data types that cannot be converted to strings.
-            if (!in_array(gettype($value), ['string', 'int', 'float', 'double'])) {
+            if (!in_array(gettype($value), ['string', 'int', 'float', 'double', 'resource'])) {
                 $value = substr((string) json_encode($value), 0, 15);
             }
 
