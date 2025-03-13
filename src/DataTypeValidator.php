@@ -27,116 +27,116 @@ final class DataTypeValidator implements IsA
         return $this->isA::class;
     }
 
-    public function isBool($value): bool
+    public function isBool(mixed $value): bool
     {
         return $this->isA->isBool($value);
     }
 
-    public function isInt($value): bool
+    public function isInt(mixed $value): bool
     {
         return $this->isA->isInt($value);
     }
 
-    public function isFloat($value): bool
+    public function isFloat(mixed $value): bool
     {
         return $this->isA->isFloat($value);
     }
 
-    public function isString($value): bool
+    public function isString(mixed $value): bool
     {
         return $this->isA->isString($value);
     }
 
-    public function isArray($value): bool
+    public function isArray(mixed $value): bool
     {
         return $this->isA->isArray($value);
     }
 
-    public function isArrayOfSomething($values, string $dataType): bool
+    public function isArrayOfSomething(mixed $values, string $dataType): bool
     {
         return $this->isA->isArrayOfSomething($values, $dataType);
     }
 
-    public function isObject($value): bool
+    public function isObject(mixed $value): bool
     {
         return $this->isA->isObject($value);
     }
 
-    public function isCallable($value): bool
+    public function isCallable(mixed $value): bool
     {
         return $this->isA->isCallable($value);
     }
 
-    public function isResource($value): bool
+    public function isResource(mixed $value): bool
     {
         return $this->isA->isResource($value);
     }
 
-    public function isFuzzyObject($value, string $shortName): bool
+    public function isFuzzyObject(mixed $value, string $shortName): bool
     {
         return $this->isA->isFuzzyObject($value, $shortName);
     }
 
-    public function isSpecificObject($value, string $fullName): bool
+    public function isSpecificObject(mixed $value, string $fullName): bool
     {
         return $this->isA->isSpecificObject($value, $fullName);
     }
 
     /** @throws InvalidDataTypeException */
-    public function assertIsBool($value)
+    public function assertIsBool(mixed $value): void
     {
         $this->assertIsType($value, 'bool');
     }
 
     /** @throws InvalidDataTypeException */
-    public function assertIsInt($value)
+    public function assertIsInt(mixed $value): void
     {
         $this->assertIsType($value, 'int');
     }
 
     /** @throws InvalidDataTypeException */
-    public function assertIsFloat($value)
+    public function assertIsFloat(mixed $value): void
     {
         $this->assertIsType($value, 'float');
     }
 
     /** @throws InvalidDataTypeException */
-    public function assertIsString($value)
+    public function assertIsString(mixed $value): void
     {
         $this->assertIsType($value, 'string');
     }
 
     /** @throws InvalidDataTypeException */
-    public function assertIsArray($value)
+    public function assertIsArray(mixed $value): void
     {
         $this->assertIsType($value, 'array');
     }
 
     /** @throws InvalidDataTypeException */
-    public function assertIsObject($value)
+    public function assertIsObject(mixed $value): void
     {
         $this->assertIsType($value, 'object');
     }
 
     /** @throws InvalidDataTypeException */
-    public function assertIsCallable($value)
+    public function assertIsCallable(mixed $value): void
     {
         $this->assertIsType($value, 'callable');
     }
 
     /** @throws InvalidDataTypeException */
-    public function assertIsResource($value)
+    public function assertIsResource(mixed $value): void
     {
         $this->assertIsType($value, 'resource');
     }
 
     /** @throws InvalidDataTypeException */
-    public function assertIsSpecificObject($value, string $className)
+    public function assertIsSpecificObject(mixed $value, string $className): void
     {
         $this->assertIsType($value, $className);
     }
 
-    public function assertIsArrayOfSomething($values, string $dataType)
+    public function assertIsArrayOfSomething(mixed $values, string $dataType): void
     {
         $this->assertIsArray($values);
 
@@ -149,7 +149,7 @@ final class DataTypeValidator implements IsA
     }
 
     /** @throws InvalidDataTypeException */
-    public function assertIsType($value, $dataType): void
+    public function assertIsType(mixed $value, string $dataType): void
     {
         // We can just let PHP deal with user error when it comes to undefined method names :-/
         $isA = "is{$dataType}";
@@ -173,10 +173,10 @@ final class DataTypeValidator implements IsA
     /**
      * Validates an array of values for the proper types; Laravel-esque.
      *
-     * @param array $values
-     * @param array $rules
-     * @return bool true if completely valid.
-     * @throws InvalidDataTypeException if one or more values are not the correct data type.
+     * @param array<string, mixed> $values
+     * @param array<string, string> $rules
+     * @return bool
+     * @throws InvalidDataTypeException
      */
     public function validate(array $values, array $rules): bool
     {
@@ -193,7 +193,6 @@ final class DataTypeValidator implements IsA
                 } catch (InvalidDataTypeException $e) {
                     $reasons[$key] = "$key is not a valid array of $expectedType: " . $e->getMessage();
                 }
-
                 continue;
             }
 
@@ -207,7 +206,7 @@ final class DataTypeValidator implements IsA
 
         if (!empty($reasons)) {
             $count = count($reasons);
-            $s = $count > 1 ? 's': '';
+            $s = $count > 1 ? 's' : '';
             $wasWere = $count > 1 ? 'were' : 'was';
             throw new InvalidDataTypeException("There $wasWere $count validation error{$s}.", $reasons);
         }
@@ -215,7 +214,7 @@ final class DataTypeValidator implements IsA
         return true;
     }
 
-    private function validateValue($value, string $expectedType)
+    private function validateValue(mixed $value, string $expectedType): void
     {
         // Allow nullable types.
         $nullableType = $this->extractNullableProperty($expectedType);
@@ -230,7 +229,6 @@ final class DataTypeValidator implements IsA
         // Traditional values.
         if (in_array($expectedType, IsA::KNOWN_TYPES)) {
             $this->assertIsType($value, $expectedType);
-
             return;
         }
 
@@ -238,7 +236,7 @@ final class DataTypeValidator implements IsA
         $this->assertIsSpecificObject($value, $expectedType);
     }
 
-    private function validateArraysOfSomething($values, string $expectedType)
+    private function validateArraysOfSomething(mixed $values, string $expectedType): void
     {
         // Allow nullable types.
         $nullableType = $this->extractNullableProperty($expectedType);

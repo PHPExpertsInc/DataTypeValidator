@@ -20,13 +20,19 @@ use Throwable;
 class InvalidDataTypeException extends InvalidArgumentException
 {
     /**
-     * @param mixed[] $reasons
+     * @param string $message
+     * @param array<mixed> $reasons
+     * @param int $code
+     * @param Throwable|null $previous
      */
-    public function __construct($message, protected $reasons = [], $code = 0, Throwable $previous = null)
+    public function __construct(string $message, protected array $reasons = [], int $code = 0, ?Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function getReasons(): array
     {
         return $this->reasons;

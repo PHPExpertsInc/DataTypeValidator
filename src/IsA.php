@@ -18,15 +18,15 @@ interface IsA
 {
     public const KNOWN_TYPES = ['string', 'int', 'array', 'bool', 'float', 'double', 'object', 'callable', 'resource'];
 
-    public function isBool($value): bool;
-    public function isInt($value): bool;
-    public function isFloat($value): bool;
-    public function isString($value): bool;
-    public function isArray($value): bool;
-    public function isArrayOfSomething($values, string $dataType): bool;
-    public function isObject($value): bool;
-    public function isCallable($value): bool;
-    public function isResource($value): bool;
-    public function isFuzzyObject($value, string $shortName): bool;
-    public function isSpecificObject($value, string $fullName): bool;
+    public function isBool(mixed $value): bool;
+    public function isInt(mixed $value): bool;
+    public function isFloat(mixed $value): bool;
+    public function isString(mixed $value): bool;
+    public function isArray(mixed $value): bool;
+    public function isArrayOfSomething(mixed $values, string $dataType): bool;
+    public function isObject(mixed $value): bool;
+    public function isCallable(mixed $value): bool;
+    public function isResource(mixed $value): bool;
+    public function isFuzzyObject(mixed $value, string $shortName): bool;
+    public function isSpecificObject(mixed $value, string $fullName): bool;
 }

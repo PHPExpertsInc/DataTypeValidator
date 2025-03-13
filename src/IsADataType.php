@@ -18,7 +18,7 @@ use ReflectionClass;
 
 abstract class IsADataType implements IsA
 {
-    public function isType($value, $dataType): bool
+    public function isType(mixed $value, string $dataType): bool
     {
         $isA = "is{$dataType}";
 
@@ -30,7 +30,7 @@ abstract class IsADataType implements IsA
         return $this->$isA($value, $dataType);
     }
 
-    public function isArrayOfSomething($values, string $dataType): bool
+    public function isArrayOfSomething(mixed $values, string $dataType): bool
     {
         if (!$this->isArray($values)) {
             return false;
@@ -44,22 +44,23 @@ abstract class IsADataType implements IsA
 
         return true;
     }
-    public function isObject($value): bool
+
+    public function isObject(mixed $value): bool
     {
         return is_object($value);
     }
 
-    public function isCallable($value): bool
+    public function isCallable(mixed $value): bool
     {
         return is_callable($value);
     }
 
-    public function isResource($value): bool
+    public function isResource(mixed $value): bool
     {
         return is_resource($value);
     }
 
-    public function isFuzzyObject($value, string $shortName): bool
+    public function isFuzzyObject(mixed $value, string $shortName): bool
     {
         if (!is_object($value)) {
             return false;
@@ -70,7 +71,7 @@ abstract class IsADataType implements IsA
         return strtolower($shortName) === strtolower($actualShortName);
     }
 
-    public function isSpecificObject($value, string $fullName): bool
+    public function isSpecificObject(mixed $value, string $fullName): bool
     {
         if (!is_object($value)) {
             return false;
