@@ -276,4 +276,23 @@ class DataTypeValidatorTypesTest extends TestCase
             self::assertTrue($this->strict->isArrayOfSomething($array, $expectedType), "An array of {$expectedType}s didn't validate.");
         }
     }
+
+    public function testWillValidateAnythingAsMixedType()
+    {
+        $values = [
+            123, -456, 0, "123", "-456", "0", "1.2",
+            123, 1.23, true, false, null, [], [1, 2, 3],
+            "hello", "", "0", "123", "true", "false", " ",
+            [], [1, 2, 3], ["a", "b"], [1 => 'a', 2 => 'b'],
+            new \stdClass(), new TestDummy(), new AnotherDummy(),
+            "not an array", 123, 1.23, true, false, null, new \stdClass(), fopen('php://memory', 'r')
+        ];
+
+        foreach ($values as $value)
+        {
+            self::assertTrue($this->fuzzy->isMixed($value));
+            self::assertTrue($this->strict->isMixed($value));
+        }
+
+    }
 }

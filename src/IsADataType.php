@@ -79,4 +79,9 @@ abstract class IsADataType implements IsA
 
         return $fullName === $value::class;
     }
+
+    public function isMixed($value): bool
+    {
+        return true;
+    }
 }

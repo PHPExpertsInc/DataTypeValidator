@@ -18,6 +18,7 @@ interface IsA
 {
     public const KNOWN_TYPES = ['string', 'int', 'array', 'bool', 'float', 'double', 'object', 'callable', 'resource'];
 
+    public function isMixed(mixed $value): bool;
     public function isBool(mixed $value): bool;
     public function isInt(mixed $value): bool;
     public function isFloat(mixed $value): bool;
