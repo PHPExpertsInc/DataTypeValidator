@@ -147,6 +147,7 @@ PHPExperts\DataTypeValidator\DataTypeValidator: Data Type Checks
  ✔ Can validate strings loosely  
  ✔ Can validate arrays loosely  
  ✔ Will validate arrays of something  
+✔ Will validate anything as mixed type  
 
 PHPExperts\DataTypeValidator\IsAFuzzyDataType  
  ✔ Will return true for valid values  
@@ -185,6 +186,7 @@ Extended assertIsAType Tests
 ✔ has extended tests for asserting it is not a fuzzy array  
 ✔ has extended tests for asserting it is not a fuzzy object  
 ✔ has extended tests for asserting it is not a fuzzy specific object  
+✔ has extended tests for asserting it is a mixed type
 
 ## Testing
 

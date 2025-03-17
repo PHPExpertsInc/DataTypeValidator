@@ -224,4 +224,19 @@ class AssertIsATypeTest extends TestCase
         $values = ["not an object", 123, 1.23, null, [], [1, 2, 3], new \stdClass(), fopen('php://memory', 'r')];
         $this->assertFailValues($this->fuzzy, $values, TestDummy::class);
     }
+
+    /** @testdox has extended tests for asserting it is a mixed type */
+    public function testAssertIsMixedType()
+    {
+        $values = [
+            123, -456, 0, "123", "-456", "0", "1.2",
+            123, 1.23, true, false, null, [], [1, 2, 3],
+            "hello", "", "0", "123", "true", "false", " ",
+            [], [1, 2, 3], ["a", "b"], [1 => 'a', 2 => 'b'],
+            new \stdClass(), new TestDummy(), new AnotherDummy(),
+            "not an array", 123, 1.23, true, false, null, new \stdClass(), fopen('php://memory', 'r')
+        ];
+        $this->assertPassValues($this->strict, $values, 'mixed');
+        $this->assertPassValues($this->fuzzy, $values, 'mixed');
+    }
 }

@@ -86,6 +86,11 @@ final class DataTypeValidator implements IsA
         return $this->isA->isSpecificObject($value, $fullName);
     }
 
+    public function isMixed($value): bool
+    {
+        return $this->isA->isMixed($value);
+    }
+
     /** @throws InvalidDataTypeException */
     public function assertIsBool($value)
     {
@@ -155,6 +160,10 @@ final class DataTypeValidator implements IsA
     /** @throws InvalidDataTypeException */
     public function assertIsType($value, $dataType): void
     {
+        if ($dataType === 'mixed') {
+            return;
+        }
+
         // We can just let PHP deal with user error when it comes to undefined method names :-/
         $isA = "is{$dataType}";
 

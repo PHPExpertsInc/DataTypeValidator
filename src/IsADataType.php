@@ -27,4 +27,9 @@ abstract class IsADataType implements IsA
         // Thank you, PHP devs, for letting me throw on extra function parameters without even throwing a warning. /no-sarc
         return $this->$isA($value, $dataType);
     }
+
+    public function isMixed($value): bool
+    {
+        return true;
+    }
 }
