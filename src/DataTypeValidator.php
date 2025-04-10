@@ -196,6 +196,15 @@ final class DataTypeValidator implements IsA
     {
         $reasons = [];
 
+        // Check for extra properties not defined in rules.
+        if ($this->isStrictValidator() === true) {
+            foreach ($values as $key => $value) {
+                if (!isset($rules[$key])) {
+                    $reasons[$key] = "'$key' is not a configured DTO property";
+                }
+            }
+        }
+
         foreach ($rules as $key => $expectedType) {
             if (!$this->isString($expectedType)) {
                 throw new LogicException("The data type for $key is not a string.");

@@ -108,7 +108,7 @@ class DataTypeValidatorTest extends TestCase
         }
     }
 
-    public function testWillSilentlyIgnoreDataNotInTheRules()
+    public function testWillSilentlyIgnoreDataNotInTheRulesInPermissiveMode()
     {
         $data = [
             'name'     => 'Cheyenne',
@@ -119,7 +119,26 @@ class DataTypeValidatorTest extends TestCase
             'name'     => 'string',
         ];
 
-        self::assertTrue($this->strict->validate($data, $rules), 'Invalid data validated :o');
+        self::assertTrue($this->fuzzy->validate($data, $rules), 'Invalid data validated :o');
+    }
+
+    public function testWillExplicitlyFailWhenDataIsNotInTheRulesInStrictMode()
+    {
+        $data = [
+            'name'     => 'Cheyenne',
+            'favFood'  => 'Italian',
+        ];
+
+        $rules = [
+            'name'     => 'string',
+        ];
+
+        try {
+            $this->strict->validate($data, $rules);
+            self::fail('Worked with an extra property in Strict Mode');
+        } catch (InvalidDataTypeException $e) {
+            self::assertEquals(['favFood' => "'favFood' is not a configured DTO property"], $e->getReasons());
+        }
     }
 
     public function testWillSilentlyIgnoreNullableRulesWithNoData()
