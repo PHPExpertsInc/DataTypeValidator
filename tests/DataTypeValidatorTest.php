@@ -38,6 +38,12 @@ class DataTypeValidatorTest extends TestCase
         parent::setUp();
     }
 
+    public function testWillReportWhetherAStrictOrPermissiveValidatorIsBeingUsed()
+    {
+        self::assertTrue($this->strict->isStrictValidator());
+        self::assertFalse($this->fuzzy->isStrictValidator());
+    }
+
     public function testCanBulkValidateADataArray()
     {
         $data = [

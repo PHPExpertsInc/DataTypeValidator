@@ -18,6 +18,11 @@ use ReflectionClass;
 
 class IsAStrictDataType extends IsADataType
 {
+    public function isStrictValidator(): bool
+    {
+        return true;
+    }
+
     public function isBool($value): bool
     {
         return is_bool($value);

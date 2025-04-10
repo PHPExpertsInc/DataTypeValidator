@@ -16,7 +16,9 @@ namespace PHPExperts\DataTypeValidator;
 
 abstract class IsADataType implements IsA
 {
-    public function isType($value, $dataType): bool
+    abstract public function isStrictValidator(): bool;
+
+    public function isType($value, string $dataType): bool
     {
         $isA = "is{$dataType}";
 

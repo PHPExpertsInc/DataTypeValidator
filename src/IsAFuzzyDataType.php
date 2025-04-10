@@ -16,6 +16,11 @@ namespace PHPExperts\DataTypeValidator;
 
 class IsAFuzzyDataType extends IsAStrictDataType
 {
+    public function isStrictValidator(): bool
+    {
+        return false;
+    }
+
     public function isBool($value): bool
     {
         $isSpecialType = in_array(gettype($value), ['object', 'resource', 'unknown type']);

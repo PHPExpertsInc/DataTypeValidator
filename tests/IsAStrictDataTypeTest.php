@@ -30,6 +30,11 @@ class IsAStrictDataTypeTest extends TestCase
         parent::setUp();
     }
 
+    public function testWillSayThatItIsAStrictValidator()
+    {
+        self::assertTrue($this->isA->isStrictValidator());
+    }
+
     public function testWillReturnTrueForValidValues()
     {
         $strictTypePairs = DataTypesLists::getValidStrictDataAndTypes();

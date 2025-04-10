@@ -18,6 +18,7 @@ interface IsA
 {
     public const KNOWN_TYPES = ['string', 'int', 'array', 'bool', 'float', 'double', 'object', 'callable', 'resource'];
 
+    public function isStrictValidator(): bool;
     public function isMixed($value): bool;
     public function isBool($value): bool;
     public function isInt($value): bool;

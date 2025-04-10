@@ -30,6 +30,11 @@ class IsAFuzzyDataTypeTest extends TestCase
         parent::setUp();
     }
 
+    public function testWillSayThatItIsAPermissiveValidator()
+    {
+        self::assertFalse($this->isA->isStrictValidator());
+    }
+
     public function testWillReturnTrueForValidValues()
     {
         $strictTypePairs = DataTypesLists::getValidStrictDataAndTypes();

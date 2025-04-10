@@ -26,6 +26,11 @@ final class DataTypeValidator implements IsA
         $this->isA = $isA;
     }
 
+    public function isStrictValidator(): bool
+    {
+        return $this->isA->isStrictValidator();
+    }
+
     public function getValidationType(): string
     {
         return get_class($this->isA);
@@ -194,6 +199,7 @@ final class DataTypeValidator implements IsA
     public function validate(array $values, array $rules): bool
     {
         $reasons = [];
+
         foreach ($rules as $key => $expectedType) {
             if (!$this->isString($expectedType)) {
                 throw new LogicException("The data type for $key is not a string.");
