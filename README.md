@@ -17,6 +17,12 @@ Via Composer
 composer require phpexperts/datatype-validator
 ```
 
+## Upgrading to v3:
+
+As of v3.0, extra values not in the ruleset are explicitly asserted against when operating
+in strict mode. To upgrade, either use the `$this->isStrictMode()` to ensure you don't have
+extra inputs, or use the Fuzzy validator.
+
 ## Usage
 
 ```php
@@ -105,10 +111,12 @@ PHP v8.4 with opcache enabled
 # Use cases
 
 PHPExperts\DataTypeValidator\DataTypeValidator  
+ ✔ Will report whether a strict or permissive validator is being used  
  ✔ Can bulk validate a data array  
  ✔ Will return the name of the data validator logic  
  ✔ Will return an array of invalid keys with explanations  
- ✔ Will silently ignore data not in the rules  
+ ✔ Will silently ignore data not in the rules in permissive mode  
+ ✔ Will explicitly fail when data is not in the rules in strict mode  
  ✔ Will silently ignore nullable rules with no data  
  ✔ Data cannot be null by default  
  ✔ Any data type that starts with a '?' is nullable  
@@ -147,9 +155,10 @@ PHPExperts\DataTypeValidator\DataTypeValidator: Data Type Checks
  ✔ Can validate strings loosely  
  ✔ Can validate arrays loosely  
  ✔ Will validate arrays of something  
-✔ Will validate anything as mixed type  
+ ✔ Will validate anything as mixed type  
 
 PHPExperts\DataTypeValidator\IsAFuzzyDataType  
+ ✔ Will say that it is a permissive validator  
  ✔ Will return true for valid values  
  ✔ Will return false for invalid values  
  ✔ Will match short classes  
@@ -157,6 +166,7 @@ PHPExperts\DataTypeValidator\IsAFuzzyDataType
  ✔ Will work with an array of something  
 
 PHPExperts\DataTypeValidator\IsAStrictDataType  
+ ✔ Will say that it is a strict validator  
  ✔ Will return true for valid values  
  ✔ Will return false for invalid values  
  ✔ Will match short classes  
