@@ -18,6 +18,8 @@ use ReflectionClass;
 
 abstract class IsADataType implements IsA
 {
+    abstract public function isStrictValidator(): bool;
+
     public function isType(mixed $value, string $dataType): bool
     {
         $isA = "is{$dataType}";

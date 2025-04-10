@@ -16,6 +16,11 @@ namespace PHPExperts\DataTypeValidator;
 
 class IsAStrictDataType extends IsADataType implements IsA
 {
+    public function isStrictValidator(): bool
+    {
+        return true;
+    }
+
     public function isBool(mixed $value): bool
     {
         return is_bool($value);
