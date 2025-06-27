@@ -18,6 +18,8 @@ use LogicException;
 
 final class DataTypeValidator implements IsA
 {
+    use ExtractNullableTrait;
+
     /** @var IsADataType */
     private $isA;
 
@@ -280,17 +282,5 @@ final class DataTypeValidator implements IsA
         }
 
         $this->assertIsArrayOfSomething($values, substr($expectedType, 0, -2));
-    }
-
-    private function extractNullableProperty(string $expectedType): string
-    {
-        if ($expectedType[0] === '?' || substr($expectedType, 0, 5) === 'null|') {
-            $nullTokenPos = $expectedType[0] === '?' ? 1 : 5;
-
-            // Then strip it out of the expected type.
-            $expectedType = substr($expectedType, $nullTokenPos);
-        }
-
-        return $expectedType;
     }
 }
