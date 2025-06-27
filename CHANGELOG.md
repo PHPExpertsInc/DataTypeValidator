@@ -1,3 +1,7 @@
+## v3.1.0
+* **[2025-06-27 00:48:33 CDT]** Extracted extractNullable into its own trait shared with SimpleDTO.
+* **[2025-06-27 00:50:31 CDT]** Refactored nullable property extraction to also support "|null".
+
 ## v3.0.0
 * **[2025-04-10 07:42:15 CDT]** Explicitly assert that extra values are not permitted in Strict mode. HEAD -> v3.x
 * **[2025-04-10 07:40:57 CDT]** Added a mechanism for self-identifying whether a validator is strict or not.
