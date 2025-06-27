@@ -18,11 +18,34 @@ trait ExtractNullableTrait
 {
     private function extractNullableProperty(string $expectedType): string
     {
-        if ($expectedType[0] === '?' || substr($expectedType, 0, 5) === 'null|') {
-            $nullTokenPos = $expectedType[0] === '?' ? 1 : 5;
+        if (function_exists('str_starts_with')) {
+            // PHP 8+ optimized version
+            if (str_starts_with($expectedType, '?') ||
+                str_starts_with($expectedType, 'null|') ||
+                str_ends_with($expectedType, '|null')) {
 
-            // Then strip it out of the expected type.
-            $expectedType = substr($expectedType, $nullTokenPos);
+                if (str_starts_with($expectedType, '?')) {
+                    $expectedType = substr($expectedType, 1);
+                } elseif (str_starts_with($expectedType, 'null|')) {
+                    $expectedType = substr($expectedType, 5);
+                } else { // |null case
+                    $expectedType = substr($expectedType, 0, -5);
+                }
+            }
+        } else {
+            // PHP 7.4 compatible version
+            if ($expectedType[0] === '?' ||
+                strpos($expectedType, 'null|') === 0 ||
+                substr($expectedType, -5) === '|null') {
+
+                if ($expectedType[0] === '?') {
+                    $expectedType = substr($expectedType, 1);
+                } elseif (strpos($expectedType, 'null|') === 0) {
+                    $expectedType = substr($expectedType, 5);
+                } else { // |null case
+                    $expectedType = substr($expectedType, 0, -5);
+                }
+            }
         }
 
         return $expectedType;
