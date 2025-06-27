@@ -1,3 +1,6 @@
+## v1.8.1
+* **[2025-06-27 00:34:59 CDT]** [BACKPORT] Extracted extractNullable into its own trait shared with SimpleDTO.
+* **[2025-06-27 00:40:00 CDT]** [BACKPORT] Refactored nullable property extraction to also support "|null". HEAD -> v1.x
 
 ## v1.8.0
 * **[2025-04-10 07:42:15 CDT]** [BREAKING BACKPORT] Explicitly assert that extra values are not permitted in Strict mode.
